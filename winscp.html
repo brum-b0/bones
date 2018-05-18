@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>Using WinSCP</title>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+
+
+		<div class="container">
+			<div id='header'>
+				<div id='header_info'>
+					<center><h1>Cyberpaths</h1></center>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<center><h5>- WinSCP Installation & Usage Guide -</h5></center><br><br>
+
+					<div class='title_bg'><h3>Installation</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>WinSCP is a GUI (Graphical User Interface) tool which could be used to transfer files from a remote system to your ow system with a drag and drop interface. Instead of using SSH, SCP or other cumbersome commands to transfer specific files from a remote system WinSCP can be used for file transfer with ease.</li>
+							<li>You may download WinSCP from the following link: <a href='https://winscp.net/download/winscp576setup.exe' target='_blank'>here</a>. For more detailed information on WinSCP, feel free to check out their <a href='https://winscp.net/eng/docs/introduction' target='_blank'>website</a></li>
+							<li>Once the file is downloaded, run the set-up and follow the displayed instructions to install it. After the installation, open WinSCP</li>
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Using WinSCP with your GENI nodes </h3></div><hr>
+					<div class='subcontent'>
+						<ul class='instructions'>
+							<li>To use WinSCP with any given GENI node, follow these steps:</br></br>
+								<ol>
+									<li>Copy the host and the port number of the node in WinSCP, just like so:</br></br>
+									<center>	<img class="u-max-full-width" src='img/screenshots/Screenshot_85.png'></center></br>
+									<center>	<img class="u-max-full-width" src='img/screenshots/Screenshot_86.png'></center></li>
+									<li>Type your GENI username in the "User name" input in WinSCP (Like I did in the previous screenshot)</li>
+									<li>Now you will have to direct WinSCP to your SSH key, you may do so by clicking on the "Advanced..." button.</li>
+									<li>Under the Menu that will be displayed on the Advanced settings window, select Authentication (It's under SSH). Then on "Private key file" select your SSH key and click on "OK"</br></br>
+									<center>	<img class="u-max-full-width" src='img/screenshots/Screenshot_87.png'></center></li>
+									<li>Now you may click on the login button on WinSCP, you will be asked for your key passphrase, write it down and proceed.</li>
+									<li>If you have followed the steps correctly, you should see an interface alike this one</br></br>
+										<center><img class="u-max-full-width" src='img/screenshots/Screenshot_88.png'></center></li>
+									<li>On the left area you will see files that are stored in your computer in the selected directory, and on the right you will see the files stored on your GENI node, to transfer files just drag and drop from either side</li>
+								</ol></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

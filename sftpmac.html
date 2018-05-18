@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>sftp on Macs</title>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+
+
+		<main>
+			<div id='header'>
+				<div id='header_info'>
+					<center><h1>Cyberpaths</h1></center>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<center><h5>- Using sftp on Macs to transfer files from your nodes -</h5></center><br><br>
+					<div class="container">
+
+					<div class='title_bg'><h3>How to use sftp to retrieve files from your nodes</h3></div>
+					<hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>First you will have to go the "Details" page of your slice<br><br>
+								<center><img alt="Screenshot" class="u-max-full-width" src='img/screenshots/Screenshot_94.png'></center></li>
+							<li>Now under the node from which you want to retrieve the files, find your username. When you find your username, copy all the information I highlighted in the following screenshot:<br><br>
+								<center><img alt="Screenshot" class="u-max-full-width" src='img/screenshots/Screenshot_95.png'></center></li>
+							<li>In the information I highlighted you might see <code>-p <b style='color:red;'>someNumber</b></code> in your case, that <b style='color:red;'>number</b> will be the one you will use, in my case, since no number shows up, it means we have to use the default SSH port, which is <b>22</b>.</li>
+							<li>Go ahead and open a terminal on your Mac and execute the following command:
+
+									<pre><code><div>sftp -oPort=<b style='color:red;'>&lt;Your corresponding port from the previous step&gt;</b> <b style='color:green;'>your_username</b>@<b style='color:blue;'>host</b></div></code></pre>
+
+							<li>In <b style='color:red;'>my</b> case I had to execute the following (Use it to compare with the previous screenshot to see how I submited the information):
+								<pre class="u-max-full-width"><code class="u-max-full-width">sftp -oPort=<b style='color:red;'>22</b> <b style='color:green;'>castillo</b>@<b style='color:blue;'>pcvm3-3.geni.it.cornell.edu</b></code></pre>
+							</li>
+							<li>Now, everytime you want to download a file from your node, simply execute the following command:
+
+									<pre><code>mget <b style='color:red;'>filename</b></code></code
+
+							</li>
+							<li>For example, say I wanted to download from the node the file capture1.pcap, I would execute:
+
+									<pre><code>mget capture1.pcap</code></pre></li>
+									<center><img alt="Screenshot" class="u-max-full-width" src='img/screenshots/Screenshot_96.png'></center>
+
+
+						</ol>
+					</div>
+				</div>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

@@ -1,0 +1,205 @@
+<html>
+	<head>
+		<title>Covert Timing Channel on GENI</title>
+		<link rel='stylesheet' style='text/css' href='css/page_style.css'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+		
+		<div id='hide_page' onclick='close_popup()'></div>
+		<div id='pop_up'>
+			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
+			
+				<img src='' id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
+			
+		</div>
+		
+		<center>
+			<div id='header'>
+				<div id='header_info'>
+					<h1 style='color:white;padding-top:20px;padding-left:20px;'>Cyberpaths</h1>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<div class='title_bg' style='width:106%;position:relative;left:-3%;background-image:url("img/dark-suede.png");'><h2>Covert Timing Channel on GENI</h2></div></br>
+					
+					<div class='title_bg'><h3>Quick introduction to Covert Channels</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							Sending information over a network sounds like an everyday task, be it through e-mail or through a Skype conversation. The transmission of this information can usually be easily detected by other users; if it is encrypted, other users might not be able to know what the information is, but they will still know information is being transmitted, and sometimes this is crucial. So, how would someone send information through a network without other users knowing information is being sent? Well, one answer to that are covert channels.</br></br>
+							There are different types of covert channels, the most common ones being storage channels and timing channels. The basic difference between these two is how information is sent. On storage channels, the information is stored in an atypical way that seems like typical information. For instance, you may for example edit flags on TCP packets, and this subtle change be used to transmit messages, on the other hand, there are timing channels, which use time to send information. There are mainly two types of covert channels, passive and active. Passive covert channels delay legitimate traffic being sent to it can be decoded into a message. On the other hand, active timing channels generate traffic with very specific delays to send a message.</br></br>
+							On this tutorial we will explore an active covert timing channel. This implementation in particular uses a watermarking system, there is something we call "alphabet", which contains a list of characters and a list of time intervals that correspond to each of these, more specifically, five time intervals per character. For example, the alphabet could say that "A" corresponds to the intervals 10, 10, 10, 10, 10; so whenever an A is going to be sent through this implementation, there will be five packets that have 10 microseconds of difference in-between. The receiver keeps track of these differences and decodes back to an A. What is the perk of doing this? That the packets being sent can be mistakenly interpreted as legitimate traffic, and it does not necessarily seem like a message is being sent over the network, and thus, the transmission of the message is covert.</br></br>
+							In this tutorial, the implementation we created uses “bridges”, which are hosts that could have been compromised and are forwarding the information we send to these. The perk of having bridges is that the message is split through various routes, and thus, it is even harder to detect the message because the string that is sent to each bridge is not in any particular language so statistical analysis used to break Vigenere code for example, <b>might</b> turn useless.</br></br></br>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Setting up the topology</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>In this tutorial we will set up a covert timing channel on GENI with an implementation coded in Python. If you do not know the basics of GENI, please refer to the <a href='#' target='_blank'>Getting Started</a><!-- Insert the link whenever it's available --> tutorial to obtain your GENI account and be able to create your slice and configure your topology for the tutorial.</li>
+							<li>Once you create a slice, reserver resources on your desired GENI Site using the following RSpec Link: <a href='http://eduardocastillo.name/covert/CovertTimingChannel_Rspec.xml' target='_blank'>http://www.eduardocastillo.name/covert/CovertTimingChannel_Rspec.xml</a></li>
+							<li>Wait until your resources reserve correctly, and then open a connection to every node (Again, if you do not know how to connect to your nodes on GENI, refer to the Getting Started tutorial)</li>
+							<li>Since our implementation was meant to be executed by Python version 3.4 or above, we need to install a newer version on all of our nodes. To install Python 3.4.4 execute the following commands on every node:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>wget https://www.python.org/ftp/python/3.4.4/Python-3.4.4.tgz</span></li>
+									<li><span style='font-family:Code;'>tar -xvzf Python-3.4.4.tgz</span></li>
+									<li><span style='font-family:Code;'>cd Python-3.4.4</span></li>
+									<li><span style='font-family:Code;'>./configure</span></li>
+									<li><span style='font-family:Code;'>make</span></li>
+									<li><span style='font-family:Code;'>sudo make install</span></li>
+									<li><span style='font-family:Code;'>cd ../</span></li>
+								</ul></li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Installing Scripts</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Now, you will have to download the Python scripts to run the experiment on every node.</li>
+							<li>First, on the <b>Sender</b> node you will execute the following commands:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>wget http://www.eduardocastillo.name/covert/sender.py</span></li>
+									<li><span style='font-family:Code;'>wget http://www.eduardocastillo.name/covert/alphabets.py</span></li>
+								</ul></li>
+							<li>On each <b>Bridge</b> execute the following command:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>wget http://www.eduardocastillo.name/covert/client.py</span></li>
+								</ul></li>
+							<li><Lastly, on the <b>Receiver</b> execute the following commands:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>wget http://www.eduardocastillo.name/covert/receiver.py</span></li>
+									<li><span style='font-family:Code;'>wget http://www.eduardocastillo.name/covert/alphabets.py</span></li>
+								</ul></li>
+							<li>You need to figure out what is the IP of the Receiver in order to configure the Bridges, to do this, execute the following command on the receiver:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>ifconfig</span></li>
+								</ul>
+								The IP that is shown on eth0 is the IP of that node, the Receiver. Please write the IP down somewhere. In my case the IP is <b style='color:red;'>172.17.2.29</b></br></br>
+								<img src='img/screenshots/Screenshot_77.png'></li>
+							<li>Once you have the IP of the receiver, you need to edit the files in each bridge to make sure the data is forwarded to the receiver. Let's start with the first bridge. Execute the following command in the first bridge:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo nano client.py</span></li>
+								</ul></br>
+								Now edit line number 7, and set the host to the IP of the receiver (The one you found in the last step, <b style='color:red;'>172.17.2.29</b> in my case) just like so:</br></br>
+								<img src='img/screenshots/Screenshot_78.png'></br></br>
+								No more changes on <b>Bridge One</b> needed, now press the following buttons to save the changes on the file:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>Ctrl + X</span></li>
+									<li><span style='font-family:Code;'>Y</span></li>
+									<li><span style='font-family:Code;'>Enter</span></li>
+								</ul>
+								</li>
+							<li>Now you will have to configure Bridge number Two and Three by changing the port where they are sending data and updating the host IP like you did for Bridge One</li>
+							<li>First, let's start with Bridge Two. First, change the host on line 7 (Exactly what you just did for <b>Bridge One</b>, but do <b style='color:red;'>not</b> save the changes yet, given that you need to change something else).</li>
+							<li>Now, go to line 35 in the file and change the <b style='color:red;'>50001</b> to <b style='color:red;'>50002</b>.</br><img src='img/screenshots/Screenshot_76.png'></br>
+								Then press the following keys:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>Ctrl + X</span></li>
+									<li><span style='font-family:Code;'>Y</span></li>
+									<li><span style='font-family:Code;'>Enter</span></li>
+								</ul></li>
+							<li>Now you will do the same with the Bridge Three, but instead of changing to port <b>50002</b>, you will the port to <b style='color:red;'>50003</b></li>
+							<li>To make the changes on Bridge Three, it is basically the same commands. Execute the following on Bridge Three to edit the file:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo nano client.py</span></li>
+								</ul></li>
+							<li>Just like last time, go to line 7 and update the host's IP, then go to line 35 and change the port from <b>50001</b> to <b style='color:red;'>50003</b>. Then save the changes by pressing the following keys:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>Ctrl + X</span></li>
+									<li><span style='font-family:Code;'>Y</span></li>
+									<li><span style='font-family:Code;'>Enter</span></li>
+								</ul></li>
+							<li>Now you will set-up the sender, to do this, you will have to go to each of your Bridge nodes and execute the following command:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>ifconfig</span></li>
+								</ul></br></br>
+								Then write down on a table the Bridge node with the corresponding IP that is shown in eth0 on each bridge node, just like so:</br></br>
+								<center><table>
+									<td><img src='img/screenshots/Screenshot_79.png'></td>
+									<td><img src='img/screenshots/Screenshot_80.png'></td>
+									<td><img src='img/screenshots/Screenshot_81.png'></td>
+								</table></br>
+								<table border='1' class='special_table'>
+									<tr>
+										<th>Bridge</th>
+										<th>IP</th>
+									</tr>
+									<tr>
+										<th>Bridge One</th>
+										<td>172.17.2.25</td>
+									</tr>
+									<tr>
+										<th>Bridge Two</th>
+										<td>172.17.2.28</td>
+									</tr>
+									<tr>
+										<th>Bridge Three</th>
+										<td>172.17.2.27</td>
+									</tr>
+								</table></center>
+							</li>
+							<li>Once you have all the IPs of the different bridges, you will go to the console of the <b>Sender</b> and execute the following command:</br></br>
+							<ul>
+								<li><span style='font-family:Code;'>sudo nano sender.py</span></li>
+							</ul></br>
+							Then go to the line <b style='color:red;'>154</b> and change those IPs to the ones on your Bridges in <b>order</b> (The order is essential so the message can be reconstructed properly). Compare my screenshots with the IP table I created on my last step so you make sure you do it correctly.</br></br>
+							<table border='1' class='special_table'>
+								<tr>
+									<th>Before</th>
+									<th>After</th>
+								</tr>
+								<tr>
+									<td><img src='img/screenshots/Screenshot_82.png'></td>
+									<td><img src='img/screenshots/Screenshot_83.png'></td>
+								</tr>
+							</table></br>
+							To save the changes press the following:</br></br>
+							<ul>
+								<li><span style='font-family:Code;'>Ctrl + X</span></li>
+								<li><span style='font-family:Code;'>Y</span></li>
+								<li><span style='font-family:Code;'>Enter</span></li>
+							</ul></li>
+							<li>All the scripts should now be configure properly and ready to send a covert message through your topology!</li>
+						<ol>
+					</div>
+					
+					<div class='title_bg'><h3>Sending a covert message</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Your topology is ready, now let's start the different scripts so we can send a covert message</li>
+							<li>First go to the <b style='color:red;'>Receiver</b> node and execute the following command:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>python3.4 receiver.py</span></li>
+								</ul>
+								You should get a message for each bridge telling you the receiver is waiting for a message on each port</li>
+							<li>Now on each <b style='color:red;'>Bridge</b> node execute the following command:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>python3.4 client.py</span></li>
+								</ul>
+								You should see a message saying: "Listening" on each Bridge</li>
+							<li>Lastly, time to send a message! Execute the following command on the <b style='color:red'>Sender</b>:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>python3.4 sender.py</span></li>
+								</ul></br>
+								You will be prompted to send a message, let's start with <b>hello world</b>!</li>
+							<li>If you configured everything correctly, the <b>Sender</b> should tell you when it finished sending the message, and the <b>Receiver</b> should show when the message started to be sent on each bridge, and then show you the whole message.</br></br>
+								<img src='img/screenshots/Screenshot_84.png'>
+							</li>
+							<li>If the message gets there correctly, congratulations, you sent your first covert channel! Now think of ways this can be implemented and different usages you could give to a covert channel. If you want to know a little better how the implementation works, feel free to read the comments in the Python files.</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Survey</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							
+						</ol>
+					</div>
+					
+				</div>
+			</div>
+		</center>
+	</body>
+</html>

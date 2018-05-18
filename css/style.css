@@ -1,0 +1,61 @@
+@font-face {
+    font-family: LarkNeue;
+    src: url('Larke Neue Bold.ttf');
+}
+
+body {
+	
+	background-image:url('../img/dark-wood.png');
+
+}
+
+#logo {
+	
+	width:800px;
+	padding-top:100px;
+	
+}
+
+#info {
+	
+	width:101%;
+	height:400px;
+	background-color:black;
+	background-image:url('../img/dark-suede.png');
+	box-shadow:inset 0px 0px 50px #000;
+	position:relative;
+	top:70px;
+	position:relative;
+	left:-0.5%;
+	
+}
+
+#project_menu	{
+	
+	width:65%;
+	height:100%;
+	margin:30px 30px 30px 30px;
+	
+}
+
+#projects	{
+	
+	padding:10px 30px 30px 30px;
+	
+}
+
+#projects table td {
+	
+	padding-right:50px;
+	padding-left:50px;
+	padding-top:15px;
+	
+}
+
+#projects h1	{
+	
+	text-align:left;
+	padding-left:50px;
+	color:white;
+	font-family:LarkNeue;
+}

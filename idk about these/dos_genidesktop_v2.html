@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Network Traffic and DDoS Lab</title>
+		<link rel='stylesheet' style='text/css' href='css/page_style.css'/>
+		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+		
+		<div id='hide_page' onclick='close_popup()'></div>
+		<div id='pop_up'>
+			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
+			
+				<img src='#' alt="popup" id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
+			
+		</div>
+		
+		<main>
+			<div id='header'>
+				<div id='header_info'>
+					<h1 style='color:white;padding-top:20px;padding-left:20px;'>Cyberpaths</h1>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<div class='title_bg' style='width:106%;position:relative;left:-3%;background-image:url("img/dark-suede.png");'><h2>Network Traffic & Denial of Service Lab</h2></div><br>
+					
+					<div class='title_bg'><h3>Lab Goals</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Getting used to work with GENI and GENI Desktop</li>
+							<li>Learn how to connect to your GENI nodes using GENI Desktop</li>
+							<li>Obtain an experiential perspective of a DoS attack</li>
+                                                        <li>Analyze both normal and malicious traffic</li>
+						</ol>
+					</div>
+					<div class='title_bg'><h3>Part 1: Setting up the topology</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>For this lab you need to make sure your GENI account is working and you are able to login into it</li>
+							<li>Log into your GENI account and on the top right of the website hover with your mouse on "Tools", and on the drop-down menu you should see "GENI Desktop" in one of the options, click it.<br>
+								<img alt="Screenshot" src='img/screenshots/Screenshot_51.png'>
+							</li>
+							<li>On the page that will be opened there will be a big button saying "Authorize GENI Desktop", click on it. Then there will be another pop-up window asking you where your account is located, select the corresponding option for your account.
+								There will be a new pop-up to process the request. Then whenever you see the in the initial pop-up the button "Authorize", click it.<br><img alt="Screenshot" src='img/screenshots/Screenshot_52.png'>
+							</li>
+							<li>Now you will be on a page where all your slices, if you have any, will be listed. For this lab we will create a new slice, so click the big button "Create New Slice". Select an appropiate name, and select on the drop-down list the rightful project.</li>
+                                                        <li>On the page you will now see a message saying that you do not have any allocated resources under your slice. So select the option "Paste Text"<br><img alt="Screenshot" src='img/screenshots/Screenshot_38.png'><br> There you will paste all the content from the the following <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/DoS_RSpec.xml'>RSpec file</a>, and then select the option "Show RSpec".<br><img alt="Screenshot" src='img/screenshots/Screenshot_39.png'><br>
+								On this page you will now see your topology, you can click on "Clemson InstaGENI" and select an aggregate of your choosing just like it is shown in the screenshot<br><img alt="Screenshot" src='img/screenshots/simpleDosRspecScreenShot.png'><br>Now simply click the button "Allocate resources using this RSPEC". Now you have to wait until the resources are allocated properly.
+								In the scenario that one of your nodes fails on the process of being allocated, you must wait until you can delete all the resources to then allocate them all over again. Notice that GENI Desktop automatically added an extra node titled GDGN0 (Which stands for GENI Desktop Global Node Zero), this is needed in order for GENI Desktop features to work on your topology.<br><br>
+								You might notice that GENI Desktop generally takes a little longer to reserve the resources, please be patient. Your nodes will turn Yellow, and then as they become available they will start turning green until all of them are available. Once your nodes are available, your topology needs to be "initialized" by GENI Desktop so the features will be available.<br><br>
+								Once your topology is successfully allocated, depending on your browser, there will be a window saying that "your connection is not private". Your connection actually <b style='color:red;'>is private</b> and correctly encrypted, this alert is just shown because the SSL certificate is self-signed by the University of Kentucky. Depending on your browser, simply click Advanced, and "Proceed..."<br>
+								<img alt="Screenshot" src='img/screenshots/Screenshot_41.png'>
+                                                        </li>
+                                                </ol>
+                                        </div>  
+                                        
+					<div class='title_bg'><h3>Part 2: SSHing/Logging into your nodes.</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>SSH stands for Secure Shell. SSH is a UNIX-based command interface and protocol for securely getting access to a remote computer. It is widely used by network administrators to control web servers and other kinds of servers remotely.</li>
+							<li>What is a network protocol and why do we need a protocol like SSH? (You may search for the answer but remember to include sources.)</li>
+							<li>Take a look at your topology. You should see five  machines. These machines include "user", "victim", "attacker", "OVS", and "GDGNO3".
+								<br>
+								<br>
+								<ul>
+									<li><b>"user"</b> machine: acts as a regular user on a network; like a user that browses the internet.</li>
+									<li><b>"victim"</b> machine: acts as a victim of a Denial of Service (DoS) attack.</li>
+									<li><b>"attacker"</b> machine: acts as a malicious user and creates and sends DoS attack to the victim.</li>
+								</ul>
+							</li>
+
+                                                        <li>With GENI Desktop you have the ability to connect to your nodes through the website, to do this on the left menu click the "SSH" button. A small window will show up with two buttons. To open a SSH connection to the controller for example, click on the Controller on the topology visualizer (Jacks) and then on the SSH window that opened on GENI Desktop click either "Open Browser Tab SSH" or "Open Browser Window SSH", whichever your preference is. You will use the same SSH window for all your connections, you just need to select different nodes on the visualizer to open connections to different nodes.<img alt='Screenshot' src='img/screenshots/GeniDesktopSSHScreenShot.png'></li>
+                                                        
+								<br>
+						</ol>
+						<br>
+					</div>
+					
+					<div class='title_bg'><h3>Part 3: Running your first experiment.</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+
+
+							<li>SSH into the "user" machine using the SSH button on the GENI Desktop. Type: ping victim and hit enter on your keyboard.<br><img alt="Screenshot" src='img/screenshots/GENIDesktopPing.png'></li>
+							<li>Press both the Ctrl key and C key together. This will cancel the ping command as we do not want this to run forever. Copy three lines that were printed on the terminal after you pressed enter.</li>
+							<li>Go to the terminal that corresponds to the "victim" machine. Type: "<span style='font-family:Code;'>sudo tcpdump -i eth1</span>" and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: "<span style='font-family:Code;'>ping victim</span>" and hit enter on your keyboard.</li>
+							<li>After a few seconds, press both the Ctrl key and C key together on both terminals.<br><img alt="Screenshot" src='img/screenshots/GeniDesktopPingScreenShot.jpg'></li>
+							<li>Take a look at the terminal that corresponds to the "victim" machine. Copy the lines that were printed on the "victim" terminal. Do you think these lines have any relation to the command entered on the "user" machine terminal?</li>
+							<li>Take a look at the terminal that corresponds to the "user" machine. Copy the lines that were printed on the "user" terminal. What time units are used in the ping statistics?</li>
+							<li>What is RTT? (You may search the abbreviation but include sources.)</li>
+							<li>Do the ping statistics from 7 indicate a fast or slow network? (You may search network speeds for comparison but include sources.)</li>
+							<li>***The ping command is a query, or a question, to another computer on a network. In this case the question is sent from the "user" machine to the "victim" machine to determine whether there is a connection.***</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 4: Running an attack, observing user traffic, collecting and analyzing data.</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Go to the terminal that corresponds to the "victim" machine. Type: "<span style='font-family:Code;'>iperf -s</span>" and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: "<span style='font-family:Code;'>iperf -c victim</span>" and hit enter on your keyboard.<br><img alt="Screenshot" src='img/screenshots/GeniDesktopIperfScreenShot.jpg'></li>
+							<li>Iperf is software that tests the performance of a machine; how fast it serves network requests. The "victim" machine is running a server and the "user" machine is running a client with requests to the server on the "victim" machine.</li>
+							<li>Wait a few minutes then copy the lines that were printed on the "user" terminal.</li>
+							<li>Go to the terminal that corresponds to the "victim" machine and press both the Ctrl key and C key together.</li>
+							<li>Type: "<span style='font-family:Code;'>ping ovs</span>" and hit enter on your keyboard. Note the numbers and periods inside the parenthesis. There should be 4 numbers separated by 3 periods. For example, inside the parenthesis for me contains "10.10.2.2".<br><img alt="Screenshot" src='img/screenshots/GeniDesktopOvsPingScreenShot.png'></li>
+							<li>Go to the terminal that corresponds to the "OVS" machine. Type: "<span style='font-family:Code;'>ifconfig</span>" and hit enter.</li>
+							<li>Find the corresponding numbers from above in step 6 and remember the specific "eth" it is paired with. For example, after running ifconfig, I am looking for 10.10.2.2 and I see that it is located beside "eth3". The "eth" you see on your screen that corresponds to your specific number is what you will type. For example, I would use eth3. I would type: "<span style='font-family:Code;'>sudo tcpdump -i eth3 -vv</span>" and hit enter.<br><img alt="Screenshot" src='img/screenshots/GeniDesktopOvsIfconfigScreenShot.png'></li>
+							<li>Complete step 1 - 2 for a few seconds. What do you observe on the "OVS" machine? Where does this traffic come from?</li>
+							<li>Go to the terminal that corresponds to the "attacker" machine. Type: "<span style='font-family:Code;'>sudo timeout -sHUP 20s hping3 -i ul -S --flood --rand-source victim</span>" and hit enter on your keyboard. After a few seconds, press both the Ctrl key and C key together. What is happening in the terminal that corresponds to the "OVS" machine?<br><img alt="Screenshot" src='img/screenshots/Screenshot_16.png'></li>
+							<li>Does the traffic generated from the "attacker" machine look like it goes through at a faster pace than the traffic that you generated in task 3?</li>
+                                                        <li> Before moving onto the next step wake sure to pres both the Ctrl and C key together in the "victim" terminal.</li>
+							<li>***The first part of the commands above, "sudo", makes you a root user. You are now the privileged user that is allowed to run anything you want on the machine.<br>*** The "tcpdump" command, calls a program that monitors the network traffic that is entering the “victim” machine. The ending part of the "tcpdump" command is the network interface that is being monitored.<br>***The "hping3" command was used to run a flooding attack towards the "victim" machine. This attack is called a Denial of Service (DoS) attack and is designed to bring the network down by sending it useless traffic. (http://www.webopedia.com/DidYouKnow/Internet/DoS_attack.asp)</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 5: Collecting Data from GENI machines.</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+                                                    <li>We will now capture normal traffic and DoS traffic data and compare them using the commands that we learned in the previous step. We are going to use a neat feature of GENI Desktop to visualize the traffic sent to the victim. To use this feature click on the "Passive Graphs" button that is located on the left of the screen.<img alt='Screenshot' src='img/screenshots/Screenshot_57.png'></li>
+                                                    <li>On the window that will open-up on GENI Desktop, you will have to change the settings:
+                                                        <ul>
+                                                            <li>First, click the button "LiveUpdate", such that the graph will update constantly reflecting the traffic on the network.</li> 
+                                                            <li>Now, click on "Graphs" to disable all the ones currently enabled and then click on "Total Traffic", which is the graph we are interested in. <img alt='Screenshot' src='img/screenshots/Screenshot_58.png'</li>
+                                                            <li>Under "Nodes", only enable the Victim. The victim is the node that will receive both the normal and malicious traffic.</li>
+                                                            <li>After you have made the previous changes on the settings of the Graph window, click the button "ApplyConfig".</li>
+                                                            <li><b style='color:red;'>IMPORTANT:</b> If you click other nodes on the visualizer, the graph will automatically display the last node that you clicked. So make sure when running the actual experiment, the Victim is selected on the graph, else you will not see the experiment displayed on this graph! To check what node is being used to create the graph check on the position shown here: <img alt='Screenshot' src='img/screenshots/Screenshot_59.png'></li>
+                                                        </ul>
+                                                    </li>
+                                                    <p><b>***For the next three steps make sure to look back at your passive graph for the "victim" machine. Take screenshots for further analysis of the incoming traffic.***</b><p>
+							<li>Go to the terminal that corresponds to the "victim" machine, Type: "<span style='font-family:Code;'>iperf -s</span>" and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: "<span style='font-family:Code;'>iperf -c victim</span>" and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "attacker" machine. Type: "<span style='font-family:Code;'>sudo timeout -sHUP 20s hping3 -i ul -S --flood --rand-source victim</span>" and hit enter on your keyboard. After 30 seconds, press both the Ctrl key and C key together on all your terminal windows.</li>
+                                                </ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 6: Analyzing the data.</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+                                                    <li>Now we will analyze the information gathered after generating an attack.<br><img alt="Screnshot" src='img/screenshots/GeniDesktopSynFloodScreenShot.png'><img alt='Screenshot' src='img/screenshots/GeniDesktopNormalTrafficScreenShot.png'></li>
+							<li>Describe the graphs that are generated by GENI Desktop. The first graph is when the user connected to the victim. How does it compare to the second graph where the attacker machine perfromed a Denial of Service.</li>
+                                                        <li>Why is there more outgoing traffic in the graph when the Denial of Service occured?</li>
+						</ol>
+					</div>
+					
+					
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

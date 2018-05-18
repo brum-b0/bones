@@ -1,0 +1,164 @@
+﻿<html>
+	<head>
+		<title>Network Traffic and DDoS Lab</title>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+
+
+
+		<div class="container">
+			<div id='header'>
+				<div id='header_info'>
+					<center><h1>Cyberpaths</h1></center>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<center><h5>- Network Traffic & Denial of Service Lab -</h5></div></center><br>
+
+					<br><div class='title_bg'><h3>Lab Goals</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Getting used to work with GENI</li>
+							<li>Learn how to connect to your GENI nodes using PuTTY</li>
+							<li>Obtain an experiential perspective of a DDoS attack</li>
+							<li>Learn how to save network traffic logs in a pcap file to read with Wireshark</li>
+							<li>Use Wireshark to generate a graph from your network traffic logs</li>
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Prerequisites</h3></div><hr>
+                                        <div class='subcontent'>
+                                            <ol class='instructions'>
+						    <li>You will need basic command line knowledge to complete this lab. Codecademy has a great <a href='https://www.codecademy.com/learn/learn-the-command-line' target=_blank>tutorial</a> on this topic. </li>
+						    <li>In this lab, you will implement a computer network attack, Denial of Service (DoS). This attack is designed to deprive services, such as web content, from legitimate users. From Wikipedia: "In computing, a denial-of-service attack is a cyber-attack where the perpetrator seeks to make a machine or network resource unavailable to its intended users by temporarily or indefinitely disrupting services of a host connected to the Internet." You can watch a <a href='https://www.linkedin.com/learning/ethical-hacking-denial-of-service/understanding-denial-of-service' target=_blank> video</a> about this attack and  <a href='https://www.symantec.com/connect/blogs/iot-devices-being-increasingly-used-ddos-attacks' target=_blank> read more</a> about recent DDoS attacks using the Internet of Things interconnected devices. </li>
+						    <li>To analyze the computer network traffic from this attack, we will use tool called <a href='https://www.wireshark.org/' target=_blank>Wireshark</a>. Here is a quick <a href='https://www.youtube.com/watch?v=TkCSr30UojM' target=_blank> video tutorial</a> for this tool.</li>
+						    <li>Iperf is a tool that is used through command line to generate computer network traffic that resembles regular usage of a computer network. You can read more about this tool <a href='https://www.techrepublic.com/blog/linux-and-open-source/iperf-a-simple-but-powerful-tool-for-troubleshooting-networks/' target=_blank> here</a>.</li>
+						    <li>Hping3 is another computer networking tool that you will use. This tool, with the proper command line options, can generate a flood of computer network traffic that can overwhelm and take over networking resources. You can read more about this tool <a href='https://en.wikipedia.org/wiki/Hping' target=_blank> here</a>.</li>
+                                                                                                                                                                                                                                                   <ol>
+                                        </div>
+
+                                        <br><div class='title_bg'><h3>Setup</h3></div><hr>
+                                        <div class='subcontent'>
+                                            <ol class='instructions'>
+                                                <li>If your instructor has already provided you with a topology, you may move on to Part 1. Otherwise, complete the following instructions to set up your topology.</li>
+                                                <li>Create a new slice under the corresponding project</li>
+                                                <li>Click the "Add Resources" button located in the page of your newly created slice</li>
+                                                <li>Click the URL option<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_1.png'></center></li>
+                                                <li>Paste on the input box the following link: <b style='color:red;'>http://mountrouidoux.people.cofc.edu/CyberPaths/files/denialOfServiceLevel1.txt<!-- CHANGE THE LINK FOR THE RSPECT HERE --></b></li>
+                                                <li>Then click on the "Select" button<br><center><img class="u-max-full-width" src='img/screenshots/dos_rspec_url.png'></center></li>
+                                                <li>Your topology should now load and look like similar to this<br><center><img class="u-max-full-width" src='img/screenshots/dos_topology_notbooted.png'></center></li>
+                                                <li>Now click on "Clemson InstaGENI" and select one of aggregates on the left that is available and then reserve the resources<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_27.png'></center></li>
+                                                <li>Then wait some time until all your resources are ready, you can check the status of these by going to the page of your slice. If the background color of a given node is grey, it means that such node is not available yet; if it is green, it means that it is ready. Just like so:<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_2.png'></center></li>
+                                                                                                                                                                                                                                                                            <ol>
+                                        </div>
+
+					<br><div class='title_bg'><h3>Part 1: Retrieving your computer network topology, describing it and understanding it.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Log into the GENI Portal using your login credentials. Go to "Home", "Slices", and click on the slice that corresponds to your lab. Describe the names of the machines that you see in the topology and how they are connected.</li>
+							<li>Based on the names on each machine that is in your topology, describe what you think each machine will do. (You will need to make an educated guess.)<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_2.png'></center></li>
+							<li>The OVS in your topology is going to play the role of a network switch. Describe in your own words what you think a network switch is and how it works</li>
+						<ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Part 2: SSHing/Logging into your nodes.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>SSH stands for Secure Shell. SSH is a UNIX-based command interface and protocol for securely getting access to a remote computer. It is widely used by network administrators to control web servers and other kinds of servers remotely.</li>
+							<li>What is a network protocol and why do we need a protocol like SSH? (You may search for the answer but remember to include sources.)</li>
+							<li>Take a look at your topology. You should see four machines. These machines include "user", "victim", "attacker" and "OVS".
+								</br>
+								</br>
+								<ul>
+									<li><b>"user"</b> machine: acts as a regular user on a network; like a user that browses the internet.</li>
+									<li><b>"victim"</b> machine: acts as a victim of a Denial of Service (DoS) attack.</li>
+									<li><b>"attacker"</b> machine: acts as a malicious user and creates and sends DoS attack to the victim.</li>
+								</ul>
+							</li>
+							<li>On the GENI Portal, click on the machine in your topology called "user". You will need to open an SSH connection to this user node If you do not know how to do this, follow the "HelloGENI" tutorial for <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/GettingStartedWindowsHelloGENI.html' target=_blank>Windows users</a> or <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/gettingstartedmac.html' target=_blank>Mac users</a>.
+							<li>Repeat the process and open ssh connection with all the nodes in your topology.
+							</li>
+						</ol>
+						</br>
+					</div>
+
+					<br><div class='title_bg'><h3>Part 3: Running your first experiment.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: ping victim and hit enter on your keyboard.<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_11.png'></center></li>
+							<li>Press both the Ctrl key and C key together. This will cancel the ping command as we do not want this to run forever. Copy three lines that were printed on the terminal after you pressed enter.</li>
+							<li>Go to the terminal that corresponds to the "victim" machine. Type: <code>sudo tcpdump -i eth1</code> and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: <code>ping victim</code> and hit enter on your keyboard.</li>
+							<li>After a few seconds, press both the Ctrl key and C key together on both terminals.<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_12.png'></center></li>
+							<li>Take a look at the terminal that corresponds to the "victim" machine. Copy the lines that were printed on the "victim" terminal. Do you think these lines have any relation to the command entered on the "user" machine terminal?</li>
+							<li>Take a look at the terminal that corresponds to the "user" machine. Copy the lines that were printed on the "user" terminal. What time units are used in the ping statistics?</li>
+							<li>What is RTT? (You may search the abbreviation but include sources.)</li>
+							<li>Do the ping statistics from 7 indicate a fast or slow network? (You may search network speeds for comparison but include sources.)</li>
+							<li>***The ping command is a query, or a question, to another computer on a network. In this case the question is sent from the "user" machine to the "victim" machine to determine whether there is a connection.***</li>
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Part 4: Running an attack, observing user traffic, collecting and analyzing data.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Go to the terminal that corresponds to the "victim" machine. Type: <code>iperf -s</code> and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: <code>iperf -c victim</code> and hit enter on your keyboard.</br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_13.png'></center></li>
+							<li>Iperf is software that tests the performance of a machine; how fast it serves network requests. The "victim" machine is running a server and the "user" machine is running a client with requests to the server on the "victim" machine.</li>
+							<li>Wait a few minutes then copy the lines that were printed on the "user" terminal.</li>
+							<li>Go to the terminal that corresponds to the "victim" machine and press both the Ctrl key and C key together.</li>
+							<li>Type: <code>ping ovs</code> and hit enter on your keyboard. Note the numbers and periods inside the parenthesis. There should be 4 numbers separated by 3 periods. For example, inside the parenthesis for me contains "10.10.2.2".<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_14.png'></center></li>
+							<li>Go to the terminal that corresponds to the "OVS" machine. Type: <code>ifconfig</code> and hit enter.</li>
+							<li>Find the corresponding numbers from above in step 5 and remember the specific "eth" it is paired with. For example, after running ifconfig, I am looking for 10.10.2.2 and I see that it is located beside "eth2". The "eth" you see on your screen that corresponds to your specific number is what you will type. For example, I would use eth2. I would type: <code>sudo tcpdump -i eth2 -vv</code> and hit enter.<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_15.png'></center></li>
+							<li>Complete step 1 - 2 for a few seconds. What do you observe on the "OVS" machine? Where does this traffic come from?</li>
+							<li>Go to the terminal that corresponds to the "attacker" machine. Type: <code>sudo hping3 -S --flood victim</code> and hit enter on your keyboard. After a few seconds, press both the Ctrl key and C key together. What is happening in the terminal that corresponds to the "OVS" machine?<br><img class="u-max-full-width" src='img/screenshots/Screenshot_16.png'></li>
+							<li>Does the traffic generated from the "attacker" machine look like it goes through at a faster pace than the traffic that you generated in task 3?</li>
+
+									<ul>
+										<li>The first part of the commands above, "sudo", makes you a root user. You are now the privileged user that is allowed to run anything you want on the machine.</li>
+										<li> The "tcpdump" command, calls a program that monitors the network traffic that is entering the “victim” machine. The ending part of the "tcpdump" command is the network interface that is being monitored.</li>
+										<li>The "hping3" command was used to run a flooding attack towards the "victim" machine. This attack is called a <a target="_blank" href="http://www.webopedia.com/DidYouKnow/Internet/DoS_attack.asp" >Denial of Service (DoS) attack </a> and is designed to bring the network down by sending it useless traffic.</li>
+									</ul>
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Part 5: Collecting Data from GENI machines.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>We will now collect normal traffic and DoS traffic data and compare them. First, go to the terminal that corresponds to the "OVS" machine and press both the Ctrl key and C key together. Now in the "OVS" machine terminal, Type: <code>sudo tcpdump -i eth1 -s0 -w capture1.pcap</code> (where eth1 corresponds to the same "eth" you used in Task 4, Step 8) and hit enter on your keyboard. This command takes the tcpdump monitored traffic and writes it in a file called capture1.pcap.</li>
+							<li>Go to the terminal that corresponds to the "victim" machine and press both the Ctrl key and C key together. Now in the "victim" machine terminal, Type: <code>iperf -s</code> and hit enter on your keyboard. When you use <code>iperf -s</code> you are running an iperf server. Next you will run and iperf client on the “user” machine and generate some regular traffic</li>
+							<li>Go to the terminal that corresponds to the "user" machine. Type: <code>iperf -c victim</code> and hit enter on your keyboard.</li>
+							<li>Go to the terminal that corresponds to the "attacker" machine. Type: <code>sudo hping3 -S --flood victim</code> and hit enter on your keyboard. After 30 seconds, press both the Ctrl key and C key together on all your terminal windows.</li>
+                                                        <li>Now we will analyze the information gathered after generating an attack.<ul><li>If you are a windows user, drag and drop the capture file from your "OVS" machine to your computer using WinSCP. You can find instructions on <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html' target="_blank">how to install and use WinSCP</a> in the embedded link.  <br><!--img src='img/screenshots/Screenshot_21.png'></br><img src='img/screenshots/Screenshot_19.png'></br><img src='img/screenshots/Screenshot_20.png'></br><img src='img/screenshots/Screenshot_18.png'></br><img src='img/screenshots/Screenshot_22.png'--></li>
+							<li>If you are a Mac or Linux user, you may use sftp to transfer your files. Open a terminal on your local machine (Mac or Linux). You can find instructions on <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/sftpmac.html' target=_blank>how to install and use SFTP</a> in the embedded link.  </br><!--img src='img/screenshots/Screenshot_21.png'></br><img src='img/screenshots/Screenshot_19.png'></br><img src='img/screenshots/Screenshot_20.png'></br><img src='img/screenshots/Screenshot_18.png'></br><img src='img/screenshots/Screenshot_22.png'--></li></ul></li>
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Part 6: Analyzing the data.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Use Wireshark to view the statistics of your capture file. Write all the traffic statistics here.<br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_24.png'></center></li>
+							<li>Describe the I/O graph that is generated by your capture file. This is the graph of the traffic you ran in the previous task. Do you see at which time you started the flooding attack? Why is it very distinctive? Copy the graph.</li>
+							<li>Did the attack end at some point? What do you think happened at this point? (Refer back to Wireshark Installation & Usage Guide from Lab 0 if you need instruction on how to view the statistics and I/O graph of your capture file.)</li>
+						</ol>
+					</div>
+
+					<br><div class='title_bg'><h3>Part 7: Repeatable experiments.</h3></div><hr>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Repeat the experiments from task 3 at least four more times. You will need to change the name of the capture everytime (capture1.pcap, capture2.pcap, capture3.pcap, capture4.pcap, capture5.pcap).</li>
+							<li>Take the statistics of packet size and bandwidth from Wireshark from each pcap file and put these in an Excel spreadsheet. Calculate the average and standard deviation of this data and plot the data. Describe your observations of this data.</li>
+						</ol>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

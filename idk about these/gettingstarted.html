@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Getting started!</title>
+		<link rel='stylesheet' style='text/css' href='css/page_style.css' media='screen'/>
+		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+                
+	<body>
+		
+		<div id='hide_page' onclick='close_popup()'></div>
+		<div id='pop_up'>
+			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
+			
+				<img src='#' alt="Pop up" id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
+			
+		</div>
+		
+		<main>
+			<div id='header'>
+				<div id='header_info'>
+					<h1 id='logo_cyber'>Cyberpaths</h1>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<div id ='main_title'><h2>Getting started!</h2></div><br>
+					
+					<div class='title_bg'><h3>Creating an Account</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Go to <a href='https://portal.geni.net/' target='_blank'>https://portal.geni.net/</a> and click on the orange button that says "Use GENI".</li>
+							<li>Click the link located on the bottom of the page that says "Request a login here".</li>
+							<li>Fill out the form that will be shown in that page with all the proper information and submit it.</li>
+							<li>Keep an eye on your email as the team at GENI will be emailing you when your account is ready for use.</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Logging into GENI</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Go to <a href='https://portal.geni.net'>https://portal.geni.net</a> and click on the orange button that says "Use GENI"</li>
+							<li>On this page select "National Center for Supercomputing Applications" for the orginization's name<br><img src='img/screenshots/NCSAScreenShot.png' alt="GENI"></li>
+							<li>Now write down your account details and log in</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Joining a Project</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Once logged in, hover on the "Home" button at the top of the page and click on "Projects". Next, click the blue button that says "Join a Project".<br>
+							<img alt="Screenshot" src='img/screenshots/Screenshot_62.png'>
+							<img alt="Screenshot" src='img/screenshots/Screenshot_63.png'>
+							</li>
+							<li>On this page write down your Instructor's name. When you find your class's project, click on the "Join" button.</li>
+							<li>You must now wait until your instructor approves the request to join the project</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Installing PuTTY</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Open up a new tab on your web browser and go to <a href='http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html' target='_blank'>http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html</a></li>
+							<li>On this download PuTTY by clicking on "putty.exe"<br><img alt="Screenshot" src='img/screenshots/Screenshot_64.png'></li>
+							<li>Run this file and set PuTTY up on your computer</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Getting SSH Keys</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>On the GENI website on your first internet tab, the top corner of this page should have your name. Hover over your name and then select "SSH Keys".<br><img alt="Screenshot" src='img/screenshots/Screenshot_65.png'></li>
+							<li>Click the blue button that says, "generate and download an SSH keypair"</li>
+							<li>Follow the directions on the page and enter in a passphrase <b style='color:red;'>It is very important to remember this passphrase!</b></li>
+							<li>Next, click the blue button that reads "Generate SSH private key"</li>
+							<li>Lastly, click the button near the top of the window that reads "Download PuTTY key". <b style='color:red;'>Remember where you are saving this file</b></li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Hello GENI Experiment - Reserving Resources</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+
+                                                    <li>At the portal home page click the <b>New slice</b> button <img alt='Screenshot' src='img/screenshots/newSliceScreenShot.png'</li>
+                                                    <li>Name the slice something like <b>[yourLastName]HelloWorld</b>.</li>
+                                                    <li>Next click the <b>Add Resources</b>  button near the top of the page.</li>
+                                                    <li>In the Choose Rspec section, select the existing <b>Hello GENI</b> option. The follwing topology should appear on the screen. <img alt='Screenshot' src='img/screenshots/helloGeniRspecScreenShot.png'></li> 
+                                                    <li>Click on the Site node and choose any aggregate with <i>InstaGeni</i> or <i>ExoGENI</i>. <img alt='Screenshot' src='img/screenshots/aggregatesScreenShot.png'></li>
+                                                    <li> Finally, click the Reserve Resource button at the bottom of the page.</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Hello GENI Experiment - SSH to the Server Node/PuTTY Usage Guide</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>After you send the request to reserve the resources on the previous step, on the top of the pages hover your mouse over "Home" and select "Slices". On this page click on the slice that you created.</li>
+							<li>If the two boxes look Grey, it means that they are not ready yet. If they are green, it means that they have been reserved successfully and that you may now use them.<br><img alt="Screenshot" src='img/screenshots/Screenshot_67.png'></li>
+							<li>Now, to connect to your nodes you will need both the Host name and the port. To obtain this information for the "Server" for example, click on it; a window should show up on the left with the conection details of everyone is your project.<br><img alt="Screenshot" src='img/screenshots/Screenshot_68.png'><br>
+								After the "@" sign, and before the colon (":") will be the <b>Host name</b>, the number right after the colon will be the port number. In my case I have "castillo@<b style='color:red;'>pcvm1-15.geni.it.cornell.edu</b>:<b style='color:blue;'>22</b>". The <b style='color:red;'>red</b> part is the <b>Host Name</b>, and the <b style='color:blue;'>blue</b> part is the <b>port number</b></li>
+							<li>Now open PuTTY, and write down the details that you just figured out, just like so:<br><img alt="Screenshot" src='img/screenshots/Screenshot_69.png'></li>
+							<li>Now you must tell PuTTY to use the SSH key you downloaded earlier on the "Getting SSH Keys" step. To do this, on the PuTTY Configuration Categories select Connection -> SSH -> Auth. Browse and select your key<br><img alt="Screenshot" src='img/screenshots/Screenshot_70.png'></li>
+							<li>You may now login to the node by clicking the "Open" button. If the following pop-up shows up, just click on the "Yes" button.<br><img alt="Screenshot" src='img/screenshots/Screenshot_71.png'></li>
+							<li>Now on the SSH terminal that is open, you will be prompted to write down your user (Your GENI user) and then your password (The password you used to create your SSH key, <b style='color:red;'>NOT</b> your GENI password).</li>
+							<li>Please note that as you write your password, for security reasons it will NOT be displayed!</li>
+							<li>If you did everything correctly, your SSH terminal should look like this:<br><img alt="Screenshot" src='img/screenshots/Screenshot_72.png'></li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Hello GENI Experiment - Continued</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>On your server terminal type in the command <span style='font-family:Code;'>ifconfig</span></li>
+							<li>Now you should be able to see information corresponding to your server node. Specifically, you should see information about "eth0", "eth1" and "lo"<br><img alt="Screenshot" src='img/screenshots/Screenshot_73.png'></li>
+							<li>To the right of "eth0" you can notice it says "inet addr", the numbers right next to that are the IP address of your node. You may copy and paste this into your browser of preference. Now click on "Web Server Statistics" and see the statistics corresponding to the web server on your node<br><img alt="Screenshot" src='img/screenshots/Screenshot_74.png'></li>
+							<li>Refreshing the page multiple times will yield different statistical information on the page. Refresh the page multiple times and take note of these changes. These changes occur because you are requesting information with each refresh you do.</li>
+							<li>Next, hit the back button on your web browser and click on the second link this time that reads "Logs from the iperf Server". This shows the statistics from the iperf Server.</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Hello GENI Experiment - Generating Traffic Between Nodes</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>To generate traffic you will have to open a connection to the Client node, you can do so by following the same instructions to connect to the server; the only difference is that you will have to click the Client node on GENI, as opposed to the server, when finding out the Host name and port.</li>
+							<li>After you connect successfully, your terminal for the client should look similar to this:</br><img src='img/screenshots/Screenshot_75.png'></li>
+							<li>Now to start generating the traffic between the Client and Server, execute the following command on the terminal of the Client: <span style='font-family:Code;'>iperf -c server -P 2</span></li>
+							<li>Try using the same command again changing the <b style='color:red;'>2</b> for another positive number (Don't make it too big!). You will notice different results on the output</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Hello GENI Experiment - Finishing Up</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>On your server terminal, type "exit" and hit enter to exit out of the server node</li>
+							<li>Do the same on the client, write down "exit" and press Enter.</li>
+							<li>Lastly, on the GENI Portal on the page of your slice click the "Delete" button and click "Yes" on the pop-up, this will make the resources you reserved available again for other users</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Related Readings and Videos</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>SSH Private Keys: <a href='https://www.youtube.com/watch?v=svRWcx7dT8g' target='_blank'>Link</a></li>
+							<li>Network Switch: <a href='https://www.youtube.com/watch?v=Ofjsh_E4HFY' target='_blank'>Link</a></li>
+							<li>WinSCP Installation and Usage Guide: <a href='https://www.wireshark.org/download.html' target='_blank'>Link</a></li>
+							<li>Wireshark Installation and Usage Guide: <a href='https://winscp.net/eng/docs/guide_install' target='_blank'>Link</a></li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Survey</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							
+						</ol>
+					</div>
+					
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

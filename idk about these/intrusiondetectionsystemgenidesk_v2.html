@@ -1,0 +1,244 @@
+<html>
+	<head>
+		<title>Intrusion Detection System Lab with GENI Desktop</title>
+		<link rel='stylesheet' style='text/css' href='css/page_style.css' media='screen'/>
+		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+		
+		<div id='hide_page' onclick='close_popup()'></div>
+		<div id='pop_up'>
+			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
+			
+				<img src='' id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
+			
+		</div>
+		
+		<center>
+			<div id='header'>
+				<div id='header_info'>
+					<h1 id='logo_cyber'>Cyberpaths</h1>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<div id ='main_title'><h2>Intrusion Detection Systems Lab using GENI Desktop</h2></div></br>
+					
+					<div class='title_bg'><h3>Lab Goals</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>To get confortable using GENI Desktop</li>
+							<li>To get you acquainted with different Intrusion Detection Systems (IDSs)</li>
+							<li>To install an IDS on a real machine on GENI</li>
+							<li>To use the IDS to detect Distributed Denial of Service Attacks</li>
+							<li>To create and study IDS rules</li>
+							<li>To study IDS logs and understand them</li>
+						</ol>
+					</div>
+
+					<div class='title_bg'><h3>Quick introduction to Software Defined Networks (SDN)</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+						This lab is using a powerful network architecture, Software Defined Networking (SDN). SDN is a flexible, agile, and fully programmable network paradigm. Openflow is the framework that offers this standardization and programmability for the software swiches that are used in SDN architectures.
+						In the SDN architecture the network and control plane are separated, offering a logically centralized controller that can be easily programmable
+						and as you can see in the lab that follows can instruct the Openflow Virtual Switch to duplicate the traffic that goes to the victim to another machine called the monitor. This is pretty powerful, duplicating traffic that goes through a switch to a monitor, dedicated machine, and decentralizing the monitoring of the network for attacks. 
+						The following videos give a good introduction on SDN and Openflow:
+						<ul>
+						<li><a href='https://www.youtube.com/watch?v=DiChnu_PAzA' target='_blank'>Intro to SDN</a> </li>
+						<li><a href='https://www.youtube.com/watch?v=rYW7kQRyUvA' target='_blank'>Intro to OpenvSwitch</a></li>
+						</ul>
+
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 1: Setting up the topology</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>For this lab you need to make sure your GENI account is working and you are able to login into it</li>
+							<li>Log into your GENI account and on the top right of the website hover with your mouse on "Tools", and on the drop-down menu you should see "GENI Desktop" in one of the options, click it.</br>
+								<img src='img/screenshots/Screenshot_51.png'>
+							</li>
+							<li>On the page that will be opened there will be a big button saying "Authorize GENI Desktop", click on it. Then there will be another pop-up window asking you where your account is located, select the corresponding option for your account.
+								There will be a new pop-up to process the request. Then whenever you see the in the initial pop-up the button "Authorize", click it.</br><img src='img/screenshots/Screenshot_52.png'>
+							</li>
+							<li>Now you will be on a page where all your slices, if you have any, will be listed. For this lab we will create a new slice, so click the big button "Create New Slice". Select an appropiate name, and select on the drop-down list the rightful project.</li>
+                                                        <li>On the page you will now see a message saying that you do not have any allocated resources under your slice. So select the option "Paste Text"</br><img src='img/screenshots/Screenshot_38.png'></br> There you will paste all the content from the following <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/DDoS_IDS_RSpec.txt' target='_blank'>RSpec file</a>, and then select the option "Show RSpec".</br><img src='img/screenshots/Screenshot_39.png'></br>
+								On this page you will now see your topology, now you must click on "Site 1" and select an aggregate just like it is shown in the screenshot</br><img src='img/screenshots/Screenshot_37.png'></br>Now simply click the button "Allocate resources using this RSPEC". Now you have to wait until the resources are allocated properly.
+								In the scenario that one of your nodes fails on the process of being allocated, you must wait until you can delete all the resources to then allocate them all over again. Notice that GENI Desktop automatically added an extra node titled GDGN0 (Which stands for GENI Desktop Global Node Zero), this is needed in order for GENI Desktop features to work on your topology.</br></br>
+								You might notice that GENI Desktop generally takes a little longer to reserve the resources, please be patient. Your nodes will turn Yellow, and then as they become available they will start turning green until all of them are available. Once your nodes are available, your topology needs to be "initialized" by GENI Desktop so the features will be available.</br></br>
+								Once your topology is successfully allocated, depending on your browser, there will be a window saying that "your connection is not private". Your connection actually <b style='color:red;'>is private</b> and correctly encrypted, this alert is just shown because the SSL certificate is self-signed by the University of Kentucky. Depending on your browser, simply click Advanced, and "Proceed..."</br>
+								<img src='img/screenshots/Screenshot_41.png'>
+							</li>
+						<ol>
+					</div>
+					
+					<div class='title_bg'><h3>Before the next step you need to know a couple things of GENI Desktop!</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>With GENI Desktop you have the ability to connect to your nodes through the website, to do this on the left menu click the "SSH" button. A small window will show up with two buttons. To open a SSH connection to the controller for example, click on the Controller on the topology visualizer (Jacks) and then on the SSH window that opened on GENI Desktop click either "Open Browser Tab SSH" or "Open Browser Window SSH",
+							whichever your preference is. You will use the same SSH window for all your connections, you just need to select different nodes on the visualizer to open connections to different nodes.
+							</br><center><table><td><img src='img/screenshots/Screenshot_42.png'></td><td><img src='img/screenshots/Screenshot_44.png'></td><td><img src='img/screenshots/Screenshot_43.png'></td></table></center></li>
+							<li>Another important detail for this tutorial is to know how to paste things into the SSH terminals that you open to your nodes. To paste something in the terminals on GENI Desktop you need to make right click on it, and select "Paste from browser", then on the pop-up paste whatever content you need to paste and click OK.</br><img src='img/screenshots/Screenshot_45.png'></li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 2: Setting up your nodes; Controller</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>First we will set-up the controller! The controller is just a regular machine, we need to set it up in order for it to work as a controller for the virtual switch in our topology so it may indicate what happens with the different flows in the network. To set-up the controller open up an SSH connection it it, and use the following commands:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo git clone https://github.com/noxrepo/pox.git</span></li>
+									<li><span style='font-family:Code;'>cd pox/ext</span></li>
+									<li><span style='font-family:Code;'>sudo wget http://www.gpolab.bbn.com/experiment-support/NFVApps/pox-intro-ctrlapps.tar.gz</span></li>
+									<li><span style='font-family:Code;'>sudo tar xvfz pox-intro-ctrlapps.tar.gz</span></li>
+								</ul>
+								Having executed these commands you have installed POX, which is software written in Python designed to function as a controller for virtual switches using OpenFlow. The Controller is the "brain" of the switch and one of the powerful components of the SDN architecture. It can program the switch to do things in real time, easily, such as redirect a flow, drop it, or duplicate it!</li>
+							
+						<ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 3: Setting up your nodes; Monitor</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Now we will set-up the monitor! To get the monitor working, you first need to open a SSH connection to the Monitor node.</li>
+							<li>On the monitor we will install <a href='https://www.snort.org/' target='_blank'>Snort</a>, which is an intrusion detection system. We will use snort to detect DDoS attacks so we can mitigate them on the Lab. To install snort execute the following command to install snort:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo apt-get install snort -y</span></br></br>
+									<ul>
+										<li>At some point during the installation of snort you will be asked for a home network range. Enter: <b style='color:red;'>255.240.0.0/12</b>. This is the mask applied to the machines in the network of the topology.</li>
+									</ul>
+									</li>
+								</ul>
+							<li>To finish setting-up the monitor you need to make the following, execute the following command</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo nano /etc/snort/rules/community-virus.rules</span></li>
+								</ul>
+								Then on the editor that shows up comment out the lines 19 and 20 by adding pound signs (#) in front of the line, just like so:</br>
+								<img src='img/screenshots/Screenshot_46.png'>
+								<ul>	
+									<li>Now press "Ctrl + X" to complete the changes</li>
+									<li>Enter: "Y"</li>
+									<li>Now simply hit Enter, so the file is saved under the same name</li>
+									<li>The monitor is ready!</li>
+								</ul>
+							</li>
+							<li><b>Think about what you just did and answer the following questions:</b>
+								<ol>
+									<li>What is the purpose of Snort IDS?
+									</li>
+									<li>Why do we need to add a home network range?
+									</li>
+								</ol>
+							</li>
+
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 4: Setting up your nodes; OVS</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Now we need to set-up the virtual switch so it listens to the Controller in order to install the flows in the flow table. This switch relays packets like a regular switch but it is also highly programmable using the OpenFlow framework! First, we need to figure out what is the interface of the controller in the OVS, and what is the IP of it.
+								To find out the interface of the Controller on the OVS, go to GENI Desktop and on the visualizer Click on the Node that is between the <b>OVS</b> and the <b>Controller</b> and on the other box on GENI Desktop you will see two IPs, write down the one under "OVS". (In my case I have to write down 10.10.4.2)</br>
+								<img src='img/screenshots/Screenshot_47.png'></li>
+							<li>Now you need to open a SSH connection to the <b>OVS</b> and run the command:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>ifconfig</span></li>
+								</ul>
+								Now compare the IPs with the one you wrote down on the previous step, the matching interface will be the one that corresponds to the Controller. In my case I realized that the interface for the Controller in the <b>OVS</b> is <b style='color:red;'>eth3</b>, please write yours down!</br>
+								<img src='img/screenshots/Screenshot_48.png'>
+							</li>
+							<li>
+								Now we need to figure out the IP of the Controller so we can later point the OVS to such. To find out the IP of the <b>Controller</b> you need to open an SSH connection to it through GENI Desktop and execute the following command:</br>
+								<ul>
+									<li><span style='font-family:Code;'>ifconfig</span></li>
+								</ul>
+								Please write down the IP that shows up on eth0, <b style='color:red;'>172.17.1.26</b> in my case</br>
+								<img src='img/screenshots/Screenshot_49.png'>
+							</li>
+							<li>Now you will execute the following commands on the <b style='color:red;'>OVS</b>:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo ovs-vsctl add-br br0</span></li>
+									<li>Now, for every "eth" interface on the <b>OVS</b> <b style='color:red;'>EXCEPT</b> eth0 and the interface of the Controller (The one you found in the previous step) execute the following command:</br></br>
+									<ul><li><span style='font-family:Code;'>sudo ovs-vsctl add-port br0 <b style='color:red;'>&lt;eth Interface&gt;</b></span></li></ul></li>
+									<li><span style='font-family:Code;'>sudo ovs-vsctl set-controller br0 ptcp:6634 tcp:<b style='color:red;'>&lt;IP of the Controller&gt;</b>:6633</span></li>
+									<li><span style='font-family:Code;'>sudo ovs-vsctl set-fail-mode br0 secure</span></li>
+								</ul>
+							</li>
+							<li>Your OVS is now ready!</li>
+							<li><b>Think about what you just did and answer the following questions:</b></br></br>
+								<ol>
+									<li>What is the OVS (Openflow Virtual Switch)? What does a switch do?
+									</li>
+									<li>Why do we need a controller for the switch?
+									</li>
+								</ol>
+							</li>
+						</ol>
+					</div>
+
+					<div class='title_bg'><h3>Part 5: Experimenting - Running an Internal Attack</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							An internal attack means that the attack is coming from machines connected directly to the network switch. We will be running such an attack in order to see how correlation and mitigation takes place on an internal attack.</br></br>
+							In order to see the monitor in action, we must first start duplicating traffic using the controller on our topology (the "brain of the switch") to our monitor. This allows our monitor to view the traffic of the network.</br></br>
+							<li>To duplicate the traffic you need to first, figure out the corresponding interface (like eth1, eth2 ...) of the <b>Monitor</b> in the <b style='color:red;'>OVS</b> (You can use the GENI topology visualizer and "ifconfig" for this) and then execute the following commands on the <b>Controller</b> to start the duplication:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>cd pox</span></li>
+									<li><span style='font-family:Code;'>./pox.py --verbose DuplicateTraffic --duplicate_port=<b style='color:red;'>&lt;interface on the OVS that corresponds to the monitor&gt;</b></span></li>
+								</ul>
+							</li>
+							<li>
+								Now to start Snort you need to first figure out the interface of the OVS in the Monitor, you can figure this out by running "ifconfig" on the Monitor and comparing the IPs with the node between the Monitor and OVS, once you have figured out this, execute the following command on the Monitor's terminal:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo snort -c /etc/snort/snort.conf -A fast -i <b style='color:red;'>&lt;interface on the Monitor that corresponds to the OVS&gt;</b></span></li>
+								</ul>
+							</li>
+							<li>Now, we need to simulate normal traffic on our network to have something to which we can compare the DDoS attack. To simulate traffic on the network we will use <a href='https://www.iperf.fr'>iPerf</a>. iPerf requires a Sever and a Client to generate traffic, so we will use the Victim as the Server and the User as the Client to simulate traffic.
+							To start the server on the <b style='color:red;'>Victim</b> execute the following command:</br></br>
+							<ul>
+								<li><span style='font-family:Code;'>iperf -s</span></li>
+							</ul>
+							
+							To start the traffic simulation, now we need to make the iperf client start communicating with the Server. We will start a communication that will last two minutes (120 seconds) with the following command on the <b style='color:red;'>User</b>:</br></br>
+							<ul>
+								<li><span style='font-family:Code;'>iperf -c victim -t 120</span></li>
+							</ul></li>
+							<li>
+								Finally time to run the attack! To run the attack go to the terminal of the Attacker and execute the following command:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo timeout -sHUP 20s hping3 -i ul -S --flood --rand-source -p 80 victim</span></li>
+								</ul>
+							</li>
+							<li><b>Trust but verify!</b></br></br>
+								<ul>
+									<li>You will need to verify if the traffic is duplicated to the monitor. How can you do this? Hint: a tool that records network traffic may be useful. Describe your methodology and commands that you have used. Include screenshots. </li>
+								</ul>
+							</li>
+						</ol>
+					</div>
+
+					<div class='title_bg'><h3>Part 6: Create your own rule!</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Now that you understand what an IDS is and what Snort is for, it is your turn to create your own rule for Snort, your own alert, and then test it.</li>
+							<li>The rule you create should be based on what you did on the Part 5 of the tutorial.</li>
+							<li>Add your rule at the end of the following file: <span style='font-family:Code;'>/etc/snort/rules/&lt;rule&gt;.rules</span></li>
+							<li>Your alert should have a characteristic message, such as "Dr. X snort alert" and a sequence number that is higher than 10,000 (Numbers lower than 10,000 are reserved and used by Snort)</li>
+							<li>Test your alert by running the same DDoS attack you ran earlier. Check the snort alert file to see if your rule worked!</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Survey</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							
+						</ol>
+					</div>
+					
+				</div>
+			</div>
+		</center>
+	</body>
+</html>

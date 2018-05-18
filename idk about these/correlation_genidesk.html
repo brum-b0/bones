@@ -1,0 +1,266 @@
+<html>
+	<head>
+		<title>Intrusion Detection System Lab with GENI Desktop: Part II</title>
+		<link rel='stylesheet' style='text/css' href='css/page_style.css' media='screen'/>
+		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+		
+		<div id='hide_page' onclick='close_popup()'></div>
+		<div id='pop_up'>
+			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
+			
+				<img src='' id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
+			
+		</div>
+		
+		<center>
+			<div id='header'>
+				<div id='header_info'>
+					<h1 id='logo_cyber'>Cyberpaths</h1>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<div id ='main_title'><h2>Correlation and Mitigation using SDN Lab</h2></div></br>
+					
+					<div class='title_bg'><h3>Lab Goals</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>To get you acquainted with Software Defined Networking (SDN) concepts</li>
+							<li>To analyze Snort alerts in real time. </li>
+							<li>To study traffic flow rules and understand them.</li>
+						</ol>
+					</div>
+
+					<div class='title_bg'><h3>Quick introduction to Software Defined Networks (SDN)</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+						This lab is using a powerful network architecture, Software Defined Networking (SDN). SDN is a flexible, agile, and fully programmable network paradigm. Openflow is the framework that offers this standardization and programmability for the software swiches that are used in SDN architectures.
+						In the SDN architecture the network and controle plane are separated, offering a logically centralized controller that can be easily programmable
+						and as you can see in the lab that follows can instruct the Openflow Virtual Switch to change configurations in real time. 
+						In our case the controller instructs the switch to drop the malicious flow of the Denial of Service attack. Furthermore, the controller can offer
+						useful information about the network, i.e., information about the flows that are going through the switch that includes source and destination IP addresses, source and destination MAC addresses, ports, and other useful statistics. The following videos give a good introduction on SDN and Openflow:
+						<ul>
+						<li><a href='https://www.youtube.com/watch?v=DiChnu_PAzA' target='_blank'>Intro to SDN</a> </li>
+						<li><a href='https://www.youtube.com/watch?v=rYW7kQRyUvA' target='_blank'>Intro to OpenvSwitch</a></li>
+						<li><a href='https://www.youtube.com/watch?v=l25Ukkmk6Sk' target='_blank'>Intro to OpenFlow</a></li>
+						<li><a href='https://www.youtube.com/watch?v=FyV4MoQ3T0I' target='_blank'>OpenFlow Flow Entries</a></li>
+						</ul>
+
+						</ol>
+					</div>
+                                         <div class='title_bg'><h3>RSpec and Python code you will need for this lab</h3></div>
+                                                <div class='subcontent'>
+                                                  <ul class='instruction'>
+                                                      <li><a href='http://www.eduardocastillo.name/cyberpaths/HW6.xml'>RSpec</a></li> 
+                                                      <li><a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/analyze.py'>analyze.py</a></li>
+                                                      <li><a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/correlate.py'>correlate.py</a></li>
+                                                      <li><a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/mitigate.py'>mitigate.py</a></li>
+                                                  </ul>
+                                        </div>
+                                           
+
+					
+					<div class='title_bg'><h3>Part 1: analyze.py - Installing, Understanding and Running</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li><b>Installing analyze.py</b></br></br>
+								<ul>
+									<li>Open the Topology that you prepared for this lab on GENI Desktop</li>
+									<li>In the case that you had closed your slice, and you are re-opening it again with GENI Desktop, it will tell you that it needs to "install keys". Just wait for a short time and then the GENI Desktop tools will become available on the left of the screen again.</li>
+									<li>Now that all your tools on GENI Desktop are available, you will click the button on the left menu that says "File Upload - Direct". A small window on GENI Desktop will show up.</li>
+									<li>On the topology visualizer click on the Monitor. Then on the File Upload window click on the "Set Selection" button</br><img src='img/screenshots/Screenshot_53.png'></li>
+									<li>Now click on the "Choose Files" button and select analyze.py from your computer and then click "Upload Files to Nodes"</li>
+									<li>Go ahead and open an SSH window to the Monitor and execute the following command:</br></br>
+										<ul>
+											<li><span style='font-family:Code;'>sudo nano analyze.py</span></li>
+										</ul>
+									</li>
+									<li>Now on the editor that is opened on the SSH window after you executed the last command, find the line where the "HOST" is defined, it looks like this:</br>
+										<img src='img/screenshots/Screenshot_54.png'></br>
+										Change the IP there to the IP of your Controller (The one you wrote down during the set-up of your topology) which is <b><span style='color:red;'>172.17.1.26</span> in my case</b>. Then press "Ctrl + X", then "Y", lastly just hit Enter to keep the same name of the file
+										<li>Now you have to execute the following command to change the location of the file in the node:</br></br>
+											<ul>
+												<li><span style='font-family:Code;'>sudo mv analyze.py ../../opt/analyze.py</span></li>
+											</ul>
+										</li>
+									</li>
+									<li>analyze.py is now installed!</li>
+								</ul>
+							</li>
+							<li><b>Understanding what analyze.py does</b></br></br>
+								<ul>
+									<li>Read the python code. What do you think this script is doing? What are its main parts?</li>
+									<li>How does the script read a tcpdump (copy paste the command)? What information does it extract? </li>
+									<li>Copy paste in your report the line of code that sends information to the correlator. What does the monitor send to the correlator? Why do you think it sends this information?</li>
+								</ul>
+							</li>
+							<li><b>Running analyze.py - Execute the following commands:</b></br></br>
+								<ul>
+									<li>Open a SSH Window to the Monitor and execute</li>
+									<li><span style='font-family:Code;'>cd /opt/</span></li>
+									<li><span style='font-family:Code;'>sudo python analyze.py</span></li>
+									<li>analyze.py is now running!</li>
+								</ul>
+							</li>
+						<ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 2: correlate.py - Installing, Understanding and Running</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li><b>Installing correlate.py</b></br></br>
+							<ul>
+								<li>The installation is very similar to that of analyze.py. You need to first upload <b>correlate.py</b> to the <b>Controller</b>. To do this, make sure the "File Upload - Direct" is open, then click on the Controller node on the visualizer, click "Set Selection" on the Upload file window and then select the correlate.py and upload it.</li>
+								<li>We need to find the IP of the OVS, to do this, open a SSH window to the OVS and run the command <span style='font-family:Code;'>ifconfig</span> and copy down the IP that shows up on <b style='color:red;'>eth0</b> (<b>172.17.1.29 in my case</b>)</br><img src='img/screenshots/Screenshot_55.png'></li>
+								<li>Open a SSH Window to the Controller and execute the following command</br></br>
+									<ul>
+										<li><span style='font-family:Code;'>sudo nano correlate.py</span></li>
+									</ul>
+								</li>
+								<li>Now edit the line that contains <b>"ovsAddress"</b>, and change the IP address to the IP of the OVS, the one you found in the previous step. It should look like this:</br>
+									<img src='img/screenshots/Screenshot_56.png'>
+								</li>
+								<li>Now press "Ctrl + X"</li>
+								<li>Enter: "Y"</li>
+								<li>Hit Enter, to keep the same file name</li>
+								<li><b>correlate.py</b> is now installed!</li>
+							</ul>
+							</li>
+							<li><b>Understanding</b></br></br>
+								<ul>
+									<li>The correlator script starts by setting up an initial flow table of the network by running a flow dump on the OVS IP address. Copy paste the code that is creating this flow table. </li>
+									<li>Next, the script checks the information from the monitor by first making sure the incoming information is indeed an alert. Copy paste this code. What else does the script look for in the data sent from the monitor? Why? </li>
+									<li> How does the correlator verify if an attack has occured? Is there any case the monitor sent a false alert? Explain your answer.</li>
+									<li>The script then verifies that each flow from the flow dump correlates with what is already established within our flow table.</li>
+									<li>If the script finds an inconsistency within our flow table and the flow dump, the script either calls the mitigator script, mitigate.py (if the port number from the flow dump is associated with a different IP address), or adds the new flow to our flow table (if the port number from the flow dump is not in our flow table).</li>
+								</ul>
+							</li>
+							<li><b>Running - Execute the following commands:</b></br></br>
+								<ul>
+									<li>Open a SSH window to the Controller</li>
+									<li><span style='font-family:Code;'>cd /opt/</span></li>
+									<li><span style='font-family:Code;'>sudo python correlate.py</span></li>
+									<li>correlate.py is now running!</li>
+								</ul>
+							</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 3: mitigate.py - Installing, Understanding and Running</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li><b>Installing mitigate.py</b></br></br>
+								<ul>
+									<li>Similar to the previous parts of the tutorial, you will upload another file to the <b>Controller</b>, this time it will be <b style='color:red;'>mitigate.py</b>. Upload it using the same instructions, and then move it to the <span style='font-family:Code;'>/opt/</span> directory as well</li>
+									<li>Now you will edit the file using the following command:</br></br>
+										<ul>
+											<li><span style='font-family:Code;'>sudo nano /opt/mitigate.py</span></li>
+											<li>(If you get an error executing the above command, you might not have moved the file to the opt directory correctly)</li>
+										</ul>
+									</li>
+									<li>On the editor find the line #10, the one that contains <b>"ovsAddress='<span style='color:red;'>172.17.2.16</span>'"</b>, change the IP to the one we found on the previous step, the IP of the OVS <b>(<span style='color:red;'>172.17.1.29</span>, in my case)</b>.</li>
+									<li>Save the changes the same you have done before. (<b>"Ctrl + X"</b>, <b>"Y"</b> and <b>"Enter"</b>)</li>
+								</ul>
+							
+							</li>
+							<li><b>Understanding</b></br></br>
+								<ul>
+									<li>The mitigator script, via the controller, tells the OVS to add a new flow rule in which the port that needs attention has all incoming traffic dropped.</li>
+								</ul>
+							</li>
+							<li><b>Running mitigate.py</b></br></br>
+								<ul>
+									<li>You do <b style='color:red;'>not</b> need to run any commands for mitigate.py, given that it is executed automatically by correlate.py through the next line of code</li>
+									<li><span style='font-family:Code;'>os.popen('sudo python mitigate.py ' + str(targetPort) + ' ' + str(targetIP), shell=True)</span></li>
+								</ul>
+							</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 4: Running an internal attack!</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							An internal attack means that the attack is coming from machines connected directly to the network switch. We will be running such an attack in order to see how correlation and mitigation takes place on an internal attack.</br></br>
+							In order to see correlation and mitigation in action, we must first start duplicating traffic from our controller on our topology to our monitor. This allows our monitor to view the traffic of the network.</br></br>
+							<li>To duplicate the traffic you need to first, figure out the corresponding interface (like eth1, eth2 ...) of the <b>Monitor</b> in the <b style='color:red;'>OVS</b> (You can use the GENI topology visualizer and "ifconfig" for this) and then execute the following commands to start the duplication:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>cd pox</span></li>
+									<li><span style='font-family:Code;'>./pox.py --verbose DuplicateTraffic --duplicate_port=<b style='color:red;'>&lt;interface on the OVS that corresponds to the monitor&gt;</b></span></li>
+								</ul>
+							</li>
+							<li>
+								Now to start Snort you need to first figure out the interface of the OVS in the Monitor, you can figure this out by running "ifconfig" on the Monitor and comparing the IPs with the node between the Monitor and OVS, once you have figured out this, execute the following command on the Monitor's terminal:</br></br>
+								<ul>
+									<li><span style='font-family:Code;'>sudo snort -c /etc/snort/snort.conf -A fast -i <b style='color:red;'>&lt;interface on the Monitor that corresponds to the OVS&gt;</b></span></li>
+								</ul>
+							</li>
+							<li>Now we will use a neat feature of GENI Desktop to visualize the traffic to the Victim so we can compare regular traffic to the DDoS attack, and then see how it is mitigated. To use this feature click on "Passive Graphs" button that is located on the left of the screen on GENI Desktop.</br><img src='img/screenshots/Screenshot_57.png'></br>
+								On the window that will open-up on GENI Desktop, you will have to change the settings:</br>
+								<ul>
+									<li>First, click the button "LiveUpdate", such that the graph will update constantly reflecting the traffic on the network.</li>
+									<li>Now, click on "Graphs" to disable all the ones currently enabled and then click on "Total Traffic", which is the graph we are interested in</br><img src='img/screenshots/Screenshot_58.png'>
+									<li>Under "Nodes", only enable the Victim. The victim is the node that will receive both the normal and malicious traffic.</li>
+									<li>After you have made the previous changes on the settings of the Graph window, click the button "ApplyConfig"</li>
+									<li><b style='color:red;'>IMPORTANT:</b> If you click other nodes on the visualizer, the graph will automatically display the last node that you clicked. So make sure when running the actual experiment, the <b style='color:red;'>Victim</b> is selected on the graph, else you will not see the experiment displayed on this graph! To check what node is being used to create the graph check on the position shown here:</br>
+										<img src='img/screenshots/Screenshot_59.png'>
+									</li>
+									<li>Now, we need to simulate normal traffic on our network to have something to which we can compare the DDoS attack. To simulate traffic on the network we will use <a href='https://www.iperf.fr'>iPerf</a>. iPerf requieres a Sever and a Client to generate traffic, so we will use the Victim as the Server and the User as the Client to simulate traffic.
+									To start the server on the <b style='color:red;'>Victim</b> execute the following command:</br></br>
+									<ul>
+										<li><span style='font-family:Code;'>iperf -s</span></li>
+									</ul>
+									Now go ahead and start the scripts that you installed in Part 2, so whenever snort detects a DDoS attack these mitigate such. Start the scripts in the following order: correlate.py (On the controller) and then analyze.py (On the monitor). For instructions on how to start these scripts, refer to the Part 2 on the respective "Running" portion.</br></br>
+							
+									To start the traffic simulation, now we need to make the iperf client start communicating with the Server. We will start a communication that will last two minutes (120 seconds) with the following command on the <b style='color:red;'>User</b>:</br></br>
+									<ul>
+										<li><span style='font-family:Code;'>iperf -c victim -t 120</span></li>
+									</ul></li>
+									<li>
+										Finally time to run the attack! To run the attack go to the terminal of the Attacker and execute the following command:</br></br>
+										<ul>
+											<li><span style='font-family:Code;'>sudo timeout -sHUP 20s hping3 -i ul -S --flood --rand-source -p 80 victim</span></li>
+										</ul>
+									</li>
+									<li>In the scenario that everything goes as planned, and the DDoS attack is mitigated, you should barely be able to notice any difference in the traffic and your graph should look similar to this:</br>
+										<img src='img/screenshots/Screenshot_60.png'></br>
+										The traffic that you can appreciate in there is regular traffic that we generated from the User to the Victim using iPerf. If your graph seems to mark higher traffic at some point, it might be due the fact that the DDoS attack was not mitigated successfully</br>
+										if it was, you should see a message on the <b>Controller</b>'s saying that correlation and mitigation happened.</li>
+								</ul>
+								<li><b>Trust but verify!</b></br></br>
+								<ul>
+									<li>First you will need to verify if there were messages send from the monitor to the correlator. How can you verify this? Think creatively, look at analyze.py and consider the data that will prove that the monitor sent an alert.</li>
+									<li>Next, you should verify if the correlator received anything. Again think about the traffic, the correlate.py and how you can use code and networking tool to verify everything has worked.  </li>
+									<li> Finally, you will need to verify if the attacker was blocked. You need to place all the above evidence (screenshots, logs, code changes) in your report. </li>
+								</ul>
+								</li>
+							</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Part 5: Create your own rule!</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							<li>Now that you understand what an IDS is and what Snort is for, it is your turn to create your own rule for Snort, your own alert, and then test it.</li>
+							<li>The rule you create should be based on what you did on the Part 4 of the tutorial.</li>
+							<li>Add your rule at the end of the following file: <span style='font-family:Code;'>/etc/snort/rules/&lt;rule&gt;.rules</span></li>
+							<li>Your alert should have a characteristic message, such as "Dr. X snort alert" and a sequence number that is higher than 10,000 (Numbers lower than 10,000 are reserved and used by Snort)</li>
+							<li>Test your alert by running the same DDoS attack you ran earlier. Check the snort alert file to see if your rule worked!</li>
+						</ol>
+					</div>
+					
+					<div class='title_bg'><h3>Survey</h3></div>
+					<div class='subcontent'>
+						<ol class='instructions'>
+							
+						</ol>
+					</div>
+					
+				</div>
+			</div>
+		</center>
+	</body>
+</html>
