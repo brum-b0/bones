@@ -2,23 +2,17 @@
 <html lang="en">
 	<head>
 		<title>Certificate Authority</title>
-		<link rel='stylesheet' style='text/css' href='css/page_style.css' media='screen'/>
-		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='screen'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
 		<script src='js/jquery.js'></script>
 		<script src='js/main.js'></script>
-                
-	<body>
-		
-		<div id='hide_page' onclick='close_popup()'></div>
-		<div id='pop_up'>
-			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
-			
-				<img src='#' alt="Pop up" id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
-			
-		</div>
-		
-		<main>
 
+	<body>
+		<div class="container">
+
+<!-- needs to be rewritten !-->
+		<main>
+			<center>
 			<div id='header'>
 				<div id='header_info'>
 					<h1 id='logo_cyber'>Cyberpaths</h1>
@@ -26,9 +20,10 @@
 			</div>
 			<div id='site_body'>
 				<div id='actual_content'>
-					<div id ='main_title'><h2>Certificate Authority</h2></div><br>
-					
-					<div class='title_bg'><h3>Lab Goals</h3></div>
+					<div id ='main_title'><h5>- Certificate Authority -</h5></div><br>
+						</center>
+					<br><div class='title_bg'><h3>Lab Goals</h3><hr></div>
+
 					<div class='subcontent'>
 						<ul class='instructions'>
                                                     <li>Understand the functions of a certificate authority</li>
@@ -36,7 +31,7 @@
                                                     <li> Understand how a simple web server works and interacts with a certificate authority</li>
 						</ul>
 					</div>
-					
+
 					<div class='title_bg'><h3>Quick introduction to LAMP</h3></div>
 					<div class='subcontent'>
 						<ul class='instructions'>
@@ -45,7 +40,7 @@
                                                     <li>Besides these four software packages, this software bundle can also be combined with many other free and open-source software packages.</li>
 						</ul>
 					</div>
-					
+
 					<div class='title_bg'><h3>Quick Introduction to Certificate Authority</h3></div>
 					<div class='subcontent'>
 						<ul class='instructions'>
@@ -53,7 +48,7 @@
                                                     <li>In cryptography terms, certificate authority verifies the ownership of the public key of the named subject of the certificate.</li>
 						</ul>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 1: Setting up your Topology</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -65,7 +60,7 @@
                                                     <li>Once the nodes turn green, the machines are ready for use and we can continue to the next steps</li>
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 2: Setting up LAMP on the Web Server</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -74,7 +69,7 @@
                                                     <li>Before installation, we should download the package lists from the repositories and "update" them to get information on the newest versions of packages and their dependencies. Execute the following command: <code>sudo apt-get update</code><li>
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 2 (cont.): Installing MySQL</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -84,7 +79,7 @@
                                                     <li>If it shows the listening port of MySQL as the following, then we know it was installed successfully.<img alt='Screenshot' src='img/screenshots/ca_mysql_success.png'/>
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 2 (cont): Installing Apache</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -92,8 +87,8 @@
                                                     <li> We can run the browser to check whether or not it was installed successfully. However, we need to involve third party software to enable the graphics showing on GENI node. We will cover this later.</li>
 						</ol>
 					</div>
-					
-					
+
+
 					<div class='title_bg'><h3>Part 2 (cont): Installing PHP</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -102,14 +97,14 @@
 
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 2 (cont.): Installing the extension packets of PHP and MySQL</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
                                                     <li>In order to install the extensions of PHP and MySQL, execute the following command: <code>sudo apt-get install php-mysql php-curl php-gd php-intl php-pear php-imagick php-imap php-mcrypt php-memcache php-pspell php-recode php-snmp php-sqlite3 php-tidy php-xmlrpc php-xsl</code></li>
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 3: Enabling SSL connection of Apache</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -117,7 +112,7 @@
                                                     <li> First, a brief introduction of the Apache configuration file. <img src='img/screenshots/ca_apache_config_files.png'></li>
                                                     <li>As we can see, there are several configuration files in the Apache folder. In the old versions of Apache, there is only one configuration file named “httpd.conf”. As for the latest version, the main configuration file is “apache2.conf”. We can take a quick look of this file.<img src='img/screenshots/ca_apache_conf.png'></li>
                                                     <li>There are many “include” commands in this file. This means the apache server will read this file first, and the other configuration files will be linked using these “include” commands.</li>
-                                                    <li>As for the SSL configuration file, it is in the “sites-enabled” folder. We can use the following command to create a configuration file for SSL connection: <code>sudo cp /etc/apache2/sites-available/default-ssl.conf  /etc/apache2/sites-enabled/default-ssl.conf</code></li> 
+                                                    <li>As for the SSL configuration file, it is in the “sites-enabled” folder. We can use the following command to create a configuration file for SSL connection: <code>sudo cp /etc/apache2/sites-available/default-ssl.conf  /etc/apache2/sites-enabled/default-ssl.conf</code></li>
                                                     <li>Then we modify this default-ssl.conf as follows <img src='img/screenshots/ca_ssl_conf_file.png'></li>
                                                     <li>Here, 172.17.2.41 is the IP address of our web server. You can use the command “ifconfig” to check it out. The “443” is the port number for the SSL connection.</li>
                                                     <li>We temporarily named our server jhuws.edu. The digital certificate name is jhuws.crt, and the private key of the digital certificate name is jhuws.key. Of course you can make the name as you like, but make sure to use the same name later.</li>
@@ -125,7 +120,7 @@
                                                     <li>Then, restart the apache2 service using the following commad: <code>sudo service apache2 restart</code></li>
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 4: Installing and enabling browser on GENI</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -134,7 +129,7 @@
                                                     <li>The operation of the next step will be different for Windows, Mac and Linux operating systems. For Windows and MacOS operating systems, we need to depend on third party software in order to enable the graphics display on the GENI node.</li>
 						</ol>
 					</div>
-					
+
 					<div class='title_bg'><h3>Part 4: Installing and enabling browser on GENI (Windows)</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
@@ -152,7 +147,7 @@
                                                     <li>Right click on the XQuartz icon in the dock, and select Applications &gt; Terminal.  This should bring up a new xterm terminal window.<img src='img/screenshots/ca_xquartz.png'></li>
                                                     <li>Then, make an ssh connection to the GENI node in this terminal window. Make sure to include the "-Y" flag.</li>
                                                     <li>Now execute the command "firefox", and with the help of XQuartz the a GUIt display of firefox should appear<img src='img/screenshots/ca_xquartz_firefox.png'></li>
-                                                        
+
 						</ol>
 					</div>
 
@@ -169,7 +164,7 @@
                                                     <li>Open the Firefox browser on the "user" machines</li>
                                                     <li>Enter "127.0.0.1" into the browser. If it shows the following image, then it means the Apache service is successfully installed.<img src="img/screenshots/ca_apache_default_page.png"></li>
                                                     <li>We can write a simple PHP website and then run it to test whether or not the PHP service is installed successfully.</li>
-                                                    <li>If your on a Windows machine,we can use the WinSCP software to write PHP source code. The instruction of how to log  in to a GENI node using WinSCP can be found through the following link: <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html'>http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html</a> 
+                                                    <li>If your on a Windows machine,we can use the WinSCP software to write PHP source code. The instruction of how to log  in to a GENI node using WinSCP can be found through the following link: <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html'>http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html</a>
                                                         <li>Mac and Linux users can write the PHP code on their local machine with text editor of choice, and upload it using SFTP. More instrucitons on SFTP can be found here: <a hrdf='http://mountrouidoux.people.cofc.edu/CyberPaths/sftpmac.html'>http://mountrouidoux.people.cofc.edu/CyberPaths/sftpmac.html</a></li>
                                                         <li>Under the “www/html”folder, create a file named “info.php”, and write the following code in it: <code> &lt;?php<br> phpinfo();<br> ?&gt;</code><img src='img/screenshots/ca_php_info.png'></li>
                                                         <li> Now we need to restart the apache server. Execute the following command: <code>sudo /etc/init.d/apache2 restart</code></li>
@@ -186,13 +181,13 @@
                                                     <li>We can take a quick view of OpenSSL in the GENI node. The folder is in “/etc/ssl”. We can see three documents already in this folder.</li>
                                                     <li>he “certs”folder is used to store the digital certificate of this machine. The“private”folder is used to store the private key of the digital certificate. The“openssl.cnf”file is the main configuration document of OpenSSL.</li>
                                                     <li>Right now, these documents are not enough for enabling the whole function of OpenSSL. We need to do some additional configurations.</li>
-                                                    <li>First, we need to create some new document in the /etc/ssl/ so that our CA can play the role of a functioning certificate authority. Create the "newcerts" folder and "index.txt" file.<img src='img/screenshots/ca_ssl_added_files.png'></li>  
+                                                    <li>First, we need to create some new document in the /etc/ssl/ so that our CA can play the role of a functioning certificate authority. Create the "newcerts" folder and "index.txt" file.<img src='img/screenshots/ca_ssl_added_files.png'></li>
                                                     <li>Next, we are going to create a serial document and set the serial number as pictured below.<img src='img/screenshots/ca_serial_file.png'></li>
                                                     <li>Now we need to make some edits of the openssl.cnf file. The openssl.cnf file is used mainly for the generation of certificate requests. Before we can do se, we need to change the privelages with the following command: <code>sudo chmod 777 openssl.conf</code>. If you are a windows user you can use the WinSCP editor. If you are on a Mac/Linux machine, either download the file, make changes locally and then reupload, or use a text editor such as "nano" or "vim" that you can use in the terminal.</li>
                                                     <li>Set the values as follows: <img src='img/screenshots/ca_openssl_conf_file1.png'><img src='img/screenshots/ca_openssl_conf_file2.png'></li>
                                                     <li>we need to generate a root private key for the root digital certificate for the certificate authority. Execute the following command: <code>openssl genrsa -out private/cakey.pem 2048</code></li>
                                                     <li>Finally, we create the root digital certificate for the certificate authority by executing: <code>openssl req -new -x509 -key private/cakey.pem -out cacert.pem</code><img src='img/screenshots/ca_digital_cert_fields.png'</li>
-                                                    
+
 						</ol>
 					</div>
 
@@ -228,7 +223,7 @@
                                                     <li>Now, we can view the result of the work we have done. The following operations are all on the user node.</li>
                                                     <li>Because the display of the browser on GENI is kind of slow, we determine whether or not we are right by installing “curl” to perform a quick test. Curl is a tool that allows us to make HTTP requests from the command line.</li>
                                                     <li>Install curl by executing: <code>sudo apt-get isntall curl</code></li>
-                                                    <li>Now we are going to make some modifications to our hosts file. The hosts file translates a website name to an IP address on the local machine before a DNS request is made to resolve teh website name. Change th privelages of the hosts file: <code>sudo chmod 777 hosts</code>. Now edit so that the IP adress of the ws node is set to the server name "jhuws.edu" like so.<img src='img/screenshots/ca_hosts_file.png'></li> 
+                                                    <li>Now we are going to make some modifications to our hosts file. The hosts file translates a website name to an IP address on the local machine before a DNS request is made to resolve teh website name. Change th privelages of the hosts file: <code>sudo chmod 777 hosts</code>. Now edit so that the IP adress of the ws node is set to the server name "jhuws.edu" like so.<img src='img/screenshots/ca_hosts_file.png'></li>
                                                     <li> Now use curl to see if our webserver is working proparly: <code>curl jhuws.edu</code></li>
                                                     <li> The command should return the HTML of the apache server default page.<img src='img/screenshots/ca_curl_reg.png'></li>
                                                     <li>Now to test if the SSL configuration we modified ealier works, execute the following command: <code>curl https://jhuws.edu --cacert cacert.crt</code></li>

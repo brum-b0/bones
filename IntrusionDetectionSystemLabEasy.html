@@ -113,7 +113,9 @@
 							<li>Now, run <code>ifconfig</code> on the Monitor, and find which interface on the OVS has an IP that matches up with the Monitor's eth1 IP (for example: if the Monitor's eth1 IP is 10.10.3.1, find which interface on the OVS has the IP 10.10.3.2).</li>
 							<li>Now, go back to the OVS node. There, execute the following command. Here, ethC represents the interface that matches with the Monitor's IP, and ethX, ethY, and ethZ are the three remaining interfaces besides eth0 and lo:
 
-									<pre><code>sudo ovs-vsctl -- set Bridge br0 mirrors=@m -- --id=@ethX get Port ethX -- --id=@ethY get Port ethY -- --id=@ethZ get Port ethZ -- --id=ethC get Port ethC -- --id=@m create Mirror name=mymirror select-dst-port=@ethX,@ethY,@ethZ select-src-port=@ethX,@ethY,@ethZ output-port=@ethC</code></pre></li>
+									<pre><code>sudo ovs-vsctl -- set Bridge br0 mirrors=@m -- --id=@ethX get Port ethX -- --id=@ethY get Port ethY&nbsp;
+-- --id=@ethZ get Port ethZ -- --id=ethC get Port ethC -- --id=@m create Mirror name=mymirror&nbsp;
+select-dst-port=@ethX,@ethY,@ethZ select-src-port=@ethX,@ethY,@ethZ output-port=@ethC</code></pre></li>
 									<li>This command creates a mirror port for the switch, i.e., all the traffic that goes through the switch is copied to this port and as a consequence it is sent to the monitor. Thus, if the user is sending traffic to the victim, this traffic will be seen both by the victim and the monitor.</li>
 
 

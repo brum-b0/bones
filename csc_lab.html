@@ -2,22 +2,18 @@
 <html lang="en">
 	<head>
 		<title>Covert Storage Channel</title>
-		<link rel='stylesheet' style='text/css' href='css/page_style.css' media='screen'/>
-		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='screen'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
 		<script src='js/jquery.js'></script>
 		<script src='js/main.js'></script>
-                
+
 	<body>
-		
-		<div id='hide_page' onclick='close_popup()'></div>
-		<div id='pop_up'>
-			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
-			
-				<img src='#' alt="Pop up" id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
-			
-		</div>
-		
+
+
+
 		<main>
+			<div class="container">
+			<center>
 			<div id='header'>
 				<div id='header_info'>
 					<h1 id='logo_cyber'>Cyberpaths</h1>
@@ -25,9 +21,9 @@
 			</div>
 			<div id='site_body'>
 				<div id='actual_content'>
-					<div id ='main_title'><h2>Covert Storage Channel Lab</h2></div><br>
-					
-					<div class='title_bg'><h3>Lab Goals</h3></div>
+					<div id ='main_title'><h5>- Covert Storage Channel Lab -</h5></div><br>
+				</center>
+					<br><div class='title_bg'><h3>Lab Goals</h3><hr></div>
 					<div class='subcontent'>
 						<ul class='instructions'>
 						<li>Generate regular network traffic based on a distribution</li>
@@ -35,116 +31,113 @@
 						<li>Detect the presence of covert storage traffic in a netowrk</li>
 						</ul>
 					</div>
-				
-					<div class='title_bg'><h3>Prerequisites</h3></div>
+
+					<br><div class='title_bg'><h3>Prerequisites</h3><hr></div>
                                         <div class='subcontent'>
                                             <ol class='instructions'>
-						    <li>You will need basic command line knowledge to complete this lab. Codecademy has a great <a href='https://www.codecademy.com/learn/learn-the-command-line' target=_blank>tutorial</a> on this topic. </li> 
+						    <li>You will need basic command line knowledge to complete this lab. Codecademy has a great <a href='https://www.codecademy.com/learn/learn-the-command-line' target=_blank>tutorial</a> on this topic. </li>
 						    <li>To analyze the computer network traffic from this attack, we will use tool called <a href='https://www.wireshark.org/' target=_blank>Wireshark</a>. Here is a quick <a href='https://www.youtube.com/watch?v=TkCSr30UojM' target=_blank> video tutorial</a> for this tool.</li>
 						    <li>Hping3 is a computer networking tool that you will use. You can read more about this tool <a href='https://en.wikipedia.org/wiki/Hping' target=_blank> here</a>.</li>
 						    <li>Scapy is a versatile Python program that enables the user to send, sniff and dissect and forge network packets. The Scapy <a href='https://scapy.readthedocs.io/en/latest/' target=_blank> documentation</a> is a great resource if you would like to learn more. </li>
                                                                                                                                                                                                                                                    <ol>
                                         </div>
-	
-					<div class='title_bg'><h3>Part 1: Setting up the topology</h3></div>
+
+					<br><div class='title_bg'><h3>Part 1: Setting up the topology</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>Create a new slice under your corresponding project.</li>
 							<li>Click the "Add Resources" button located in the page of your newly created slice.</li>
-							<li>Click the URL Option.<img alt="Screenshot" src="img/screenshots/csc_rspec.png"></li>
-							<li>Paste in the input box the following link: http://mountrouidoux.people.cofc.edu/CyberPaths/files/csc_lab_rspec.txt</li>
+							<li>Click the URL Option.<center><img class="u-max-full-width"alt="Screenshot" src="img/screenshots/csc_rspec.png"></center><br></li>
+							<li>Paste in the input box the following link: <pre><code>http://mountrouidoux.people.cofc.edu/CyberPaths/files/csc_lab_rspec.txt</code></pre></li>
 							<li>Once you have pasted the above link, click on the "Select" button.</li>
-							<li>Your topology should now load and look similar to this: <br><img src="img/screenshots/csc_topology.png"></li>
-							<li>Next, click on the box that says "Site 1" and select any available InstaGENI or ProtoGENI aggregate, and then reserve the resources.<br><img src="img/screenshots/csc_aggregates.png"></li>
-							<li>Wait some time until all your resources are ready and available; you can check the status of these by going to the page of your slice. If the background color of a given node is grey, it means that such node is not ready and not available yet. If the background color of a given node is green, it means that such node is ready and available, just like below: <br><img src="img/screenshots/csc_booted_topology.png"></li>
+							<li>Your topology should now load and look similar to this: <br><center><img class="u-max-full-width"src="img/screenshots/csc_topology.png"></center><br></li>
+							<li>Next, click on the box that says "Site 1" and select any available InstaGENI or ProtoGENI aggregate, and then reserve the resources.<br><center><img class="u-max-full-width"src="img/screenshots/csc_aggregates.png"></center><br></li>
+							<li>Wait some time until all your resources are ready and available; you can check the status of these by going to the page of your slice. If the background color of a given node is grey, it means that such node is not ready and not available yet. If the background color of a given node is green, it means that such node is ready and available, just like below: <br><center><img class="u-max-full-width" src="img/screenshots/csc_booted_topology.png"></center><br></li>
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Controller</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Controller</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>With your topology resources reserved and ready, you may login to your nodes (for help on how to login to your nodes, please refer to one of the previous guides). Each node will require different preparations.</li>
-							<li>The controller is just a regular machine. It needs to be set up in order for it to work as a controller for the virtual switch (OVS) in your topology. To set the controller up, connect through SSH to the controller node and execute the following commands: 
-								<ul>
-									<li>sudo git clone https://github.com/noxrepo/pox.git</li>
-									<li>cd pox/ext</li>
-									<li>sudo wget http://www.gpolab.bbn.com/experiment-support/NFVApps/pox-intro-ctrlapps.tar.gz</li>
-									<li>sudo tar xvfz pox-intro-ctrlapps.tar.gz</li>
-								</ul>
+							<li>The controller is just a regular machine. It needs to be set up in order for it to work as a controller for the virtual switch (OVS) in your topology. To set the controller up, connect through SSH to the controller node and execute the following commands:
+								<pre><code>sudo git clone https://github.com/noxrepo/pox.git
+cd pox/ext
+sudo wget http://www.gpolab.bbn.com/experiment-support/NFVApps/pox-intro-ctrlapps.tar.gz
+sudo tar xvfz pox-intro-ctrlapps.tar.gz</code></pre>
 							</li>
-							<li>Having executed the above commands, the controller node now has the capability of operating as a controller to the virtual switch (OVS) of your topology.</li>						
+							<li>Having executed the above commands, the controller node now has the capability of operating as a controller to the virtual switch (OVS) of your topology.</li>
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: OVS</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: OVS</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
-							<li>First, change the netmask so that all the interfaces belong to the same subnet. For each interface except for eth0, and the interface that connects the OVS to the Controller, run: "<span style='font-family:Code;'>sudo ifconfig eth<X> &lt;OVSIP&gt; netmask 255.255.0.0</span>" </li>
+							<li>First, change the netmask so that all the interfaces belong to the same subnet. For each interface except for eth0, and the interface that connects the OVS to the Controller, run: <code>sudo ifconfig eth<X> &lt;OVSIP&gt; netmask 255.255.0.0</code> </li>
 							<li>Now you need to set-up the open virtual switch (OVS). Connect through SSH to the OVS node and execute the following command: <code>sudo ovs-vsctl add-br br0</code></li>
-							<li>Next, you need to find which interface belongs to the controller. Execute the following command: <code>sudo ifconfig</code> <br><img src="img/screenshots/csc_ovs_interfaces.png"></li>
-							<li>You should see several interfaces listed after running the above command. Next, you will need to go to the GENI page for your slice and click on the grey link between the OVS and controller.<br><img src="img/screenshots/csc_grey_link.png"></li>
+							<li>Next, you need to find which interface belongs to the controller. Execute the following command: <code>sudo ifconfig</code> <br><center><img class="u-max-full-width" src="img/screenshots/csc_ovs_interfaces.png"></center><br></li>
+							<li>You should see several interfaces listed after running the above command. Next, you will need to go to the GENI page for your slice and click on the grey link between the OVS and controller.<br><center><img class="u-max-full-width" src="img/screenshots/csc_grey_link.png"></center><br></li>
 							<li>On the left of the resource viewer you should see "Interface to OVS" and then see an IP address. Match this IP address with the corresponding interface that contains this IP address. This corresponding interface, eth1 in my case, is the interface of the controller. <br><img src="img/screenshots/csc_ovs_controller_interface.png"> <img src="img/screenshots/csc_ovs_interface.png"></li>
 							<li>Now execute the following command for every interface except eth0 and the interface for the controller (this command should be executed 5 times) on the OVS node: <code>sudo ovs-vsctl add-port br0 eth<span style='color:red'>&lt;Number&gt;</span></code></li>
 							<li>Next, connect through SSH to your controller node and note the IP address after executing the following command: <code>sudo ifconfig eth0</code></li>
 							<li>Lastly, go back to your OVS terminal and execute the following commands replacing <code style='color:red'>&lt;controller node IP address&gt;</code> with the IP address you noted from above:
-								<ul>
-									<li><code>sudo ovs-vsctl set-controller br0 ptcp:6634 tcp:<span style='color:red'>&lt;controller node IP address&gt;</span>:6633</code></li>
-									<li><code>sudo ovs-vsctl set-fail-mode br0 secure</code></li>
-								</ul>
+								<pre><code>sudo ovs-vsctl set-controller br0 ptcp:6634 tcp:<span style='color:red'>&lt;controller node IP address&gt;</span>:6633
+sudo ovs-vsctl set-fail-mode br0 secure</code>
+								</pre>
 							</li>
 
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Alice</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Alice</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>Alice will function as the sender of the covert storage channel communication. We will upload an htcl file on the alice node in order to send covert storage channel communication using the tool hping3.</li>
-							<li>Go to the terminal that corresponds to the "Alice" machine. Install hping3: "<span style='font-family:Code;'>sudo apt-get install hping3</span>" </li>
+							<li>Go to the terminal that corresponds to the "Alice" machine. Install hping3: <code>sudo apt-get install hping3</code> </li>
 							<li>Using SFTP we will upload the given htcl file <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/csc.htcl'>csc.htcl</a> to the alice node</li>
 							<li>If you are on a Mac/Linux machine SFTP into the Alice node and execute the following command(make sure you are in the same directory as the csc.htcl file when you sftp into the Alice node): <code>put csc.htcl</code></li>
 							<li>If you are on a Mac/Linux machine and need more information on SFTP please refer to this <a href="http://mountrouidoux.people.cofc.edu/CyberPaths/sftp.html">guide</a></li>
 							<li>For Windows machines you will use WinSPC to upload csc.htcl. A guide on where to install and how to use WinSPC can be found <a href="http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html">here</a></li>
-							<li>In order for the alice node to send covert storage channel communication, we need to know the IP address of the bob node. This can be done by connecting through SSH to the Bob node and executing the following command: <code>sudo ifconfig eth1</code><br><img src="img/screenshots/csc_bob_interface.png"></li>
-							<li>Next, you will open the file csc.htcl that you just uploaded. Execute the command "<code>sudo nano csc.htcl</code>" to open up the nano text editor. You will need to edit the following line  "set target 10.10.5.1" (line 1) such that it reflects the IP address of your Bob node which you found above. <br><img src="img/screenshots/csc_nano_alice.png"></li>
-							<li>Change the netmask so that all the nodes belong to the same subnet. Run: "<span style='font-family:Code;'>sudo ifconfig eth1 &lt;AliceIP&gt; netmask 255.255.0.0</span>" </li>
-							<li>To save the file on the user1 node, simply do the following: 
+							<li>In order for the alice node to send covert storage channel communication, we need to know the IP address of the bob node. This can be done by connecting through SSH to the Bob node and executing the following command: <code>sudo ifconfig eth1</code><br><center><img class="u-max-full-width"src="img/screenshots/csc_bob_interface.png"></center></li>
+							<li>Next, you will open the file csc.htcl that you just uploaded. Execute the command <code>sudo nano csc.htcl</code> to open up the nano text editor. You will need to edit the following line  "set target 10.10.5.1" (line 1) such that it reflects the IP address of your Bob node which you found above. <br><center><img class="u-max-full-width" src="img/screenshots/csc_nano_alice.png"></center><br></li>
+							<li>Change the netmask so that all the nodes belong to the same subnet. Run: <pre><code>sudo ifconfig eth1 &lt;AliceIP&gt; netmask 255.255.0.0</code></pre></li>
+							<li>To save the file on the user1 node, simply do the following:
 								<ul>
 									<li>press ctrl + x</li>
 									<li>press y</li>
 									<li>press enter</li>
 								</ul>
 							</li>
-							
+
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Bob</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Bob</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>Bob will function as the receiver of the covert storage channel communication. We will configure the bob node to play dumb to incoming TCP packets because the bob node is solely acting as the recipient of the covert storage channel communication and not as a sender or responder of covert storage channel communication.</li>
-                            <li>To make the bob node act in such a way, we need to know the IP address of the alice node. This can be done by connecting through SSH to the alice node and executing the following command: <code>sudo ifconfig eth1</code> <br><img src="img/screenshots/csc_alice_interface.png"></li>
+                            <li>To make the bob node act in such a way, we need to know the IP address of the alice node. This can be done by connecting through SSH to the alice node and executing the following command: <code>sudo ifconfig eth1</code> <br><center><img class="u-max-full-width" src="img/screenshots/csc_alice_interface.png"></center> <br></li>
                             <li>Now that we know the IP address of the alice node, we need to connect through SSH to the bob node.</li>
-                            <li>After connecting to the bob node, execute the following command by replacing <code style='color:red'>&lt;alice node IP address&gt;</code> with the IP address you noted from above: <code>sudo iptables -A INPUT -t filter -s <span style='color:red'>&lt;alice node IP address&gt;</span> --protocol tcp -j REJECT</code></li>
-							<li>Change the netmask so that all the nodes belong to the same subnet. Run: "<span style='font-family:Code;'>sudo ifconfig eth1 &lt;BobIP&gt; netmask 255.255.0.0</span>" </li>
+                            <li>After connecting to the bob node, execute the following command by replacing <code style='color:red'>&lt;alice node IP address&gt;</code> with the IP address you noted from above: <pre><code>sudo iptables -A INPUT -t filter -s <span style='color:red'>&lt;alice node IP address&gt;</span> --protocol tcp -j REJECT</code></pre></li>
+							<li>Change the netmask so that all the nodes belong to the same subnet. Run: <pre><code>sudo ifconfig eth1 &lt;BobIP&gt; netmask 255.255.0.0</code></pre></li>
                             <li>The bob node is now configured not to reply to incoming TCP packets sent from the alice node.</li>
                             <li>Why do you think we have disabled TCP packet replies from Bob to Alice?</li>
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: User1</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: User1</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>User1 will function as a sender of regular traffic to the user2 node. We will upload an htcl file on the user1 node in order to simulate regular traffic using the tool hping3.</li>
-							<li>Go to the terminal that corresponds to the "User1" machine. Install hping3: "<span style='font-family:Code;'>sudo apt-get install hping3</span>" </li>
-							<li>Change the netmask so that all the nodes belong to the same subnet. Run: "<span style='font-family:Code;'>sudo ifconfig eth1 &lt;User1IP&gt; netmask 255.255.0.0</span>" </li>
+							<li>Go to the terminal that corresponds to the "User1" machine. Install hping3: <pre><code>sudo apt-get install hping3</code></pre> </li>
+							<li>Change the netmask so that all the nodes belong to the same subnet. Run: <pre><code>sudo ifconfig eth1 &lt;User1IP&gt; netmask 255.255.0.0</code></pre></li>
 							<li>Using SFTP we will upload the given htcl file <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/regular1.htcl'>regular1.htcl</a> to the alice node</li>
 							<li>If you are on a Mac/Linux machine SFTP into the Alice node and execute the following command(make sure youa re in the same directory as the regular1.htcl file when you sftp into the Alice node): <code>put regular.htcl</code></li>
 							<li>If you are on a Mac/Linux machine and need more information on SFTP please refer to this <a href="http://mountrouidoux.people.cofc.edu/CyberPaths/sftpmac.html">guide</a></li>
 							<li>For Windows machines you will use WinSPC to upload csc.htcl. A guide on where to install and how to use WinSPC can be found <a href="http://mountrouidoux.people.cofc.edu/CyberPaths/winscp.html">here</a></li>
 							<li>In order for the user1 node to send the simulated regular traffic, we need to know the IP address of the user2 node. This can be done by connecting through SSH to the user2 node and executing the following command: <code>sudo ifconfig eth1</code><br><!--img src="img/screenshots/csc_user2_interface.png"--></li>
-							<li>Next, you will open the file regular1.htcl that you just uploaded. Execute the command "<code>sudo nano regular1.htcl</code>"" to open up the nano text editor. You will need to edit the following line "set target 10.10.1.1" (line 1) such that it reflects the IP address of your user2 node which you found above.<br><img src="img/screenshots/csc_nano_user1.png"></li>
-							<li>To save the file on the user1 node, simply do the following: 
+							<li>Next, you will open the file regular1.htcl that you just uploaded. Execute the command <code>sudo nano regular1.htcl</code> to open up the nano text editor. You will need to edit the following line "set target 10.10.1.1" (line 1) such that it reflects the IP address of your user2 node which you found above.<br><center><img class="u-max-full-width" src="img/screenshots/csc_nano_user1.png"></center><br></li>
+							<li>To save the file on the user1 node, simply do the following:
 								<ul>
 									<li>press ctrl + x</li>
 									<li>press y</li>
@@ -155,37 +148,37 @@
 
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: User2</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: User2</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>User2 will function as the receiver of the regular communication. We will configure the User2 node to play dumb to incoming TCP packets because the bob node is solely acting as the recipient of the covert storage channel communication and not as a sender or responder of covert storage channel communication.</li>
-							<li>Change the netmask so that all the nodes belong to the same subnet. Run: "<span style='font-family:Code;'>sudo ifconfig eth1 &lt;User2IP&gt; netmask 255.255.0.0</span>" </li>
-                            <li>To make the User2 node act in such a way, we need to know the IP address of the User1 node. This can be done by connecting through SSH to the User1 node and executing the following command: <code>sudo ifconfig eth1</code> <br><img src="img/screenshots/csc_user1_interface.png"></li>
+							<li>Change the netmask so that all the nodes belong to the same subnet. Run: <code>sudo ifconfig eth1 &lt;User2IP&gt; netmask 255.255.0.0</code> </li>
+                            <li>To make the User2 node act in such a way, we need to know the IP address of the User1 node. This can be done by connecting through SSH to the User1 node and executing the following command: <code>sudo ifconfig eth1</code> <br><center><img class="u-max-full-width" src="img/screenshots/csc_user1_interface.png"><center><br></li>
                             <li>Now that we know the IP address of the ouser1 node, we need to connect through SSH to the User2 node.</li>
                             <li>After connecting to the User2 node, execute the following command by replacing <code style='color:red'>&lt;User1 node IP address&gt;</code> with the IP address you noted from above: <code>sudo iptables -A INPUT -t filter -s <span style='color:red'>&lt;User1 node IP address&gt;</span> --protocol tcp -j REJECT</code></li>
-                            <li>The User2 node is now configured not to reply to incoming TCP packets sent from the User1 node.</li>  
+                            <li>The User2 node is now configured not to reply to incoming TCP packets sent from the User1 node.</li>
 						</ol>
 					</div>
 
-					<div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Monitor</h3></div>
+					<br><div class='title_bg'><h3>Part 2: Setting up your Nodes; Node: Monitor</h3><hr></div>
                                          <div class='subcontent'>
                                                  <ol class='instructions'>
-							<li>The Monitor is the collector of all traffic. By using SDN to duplicate all the traffic that goes through the switch, the monitor is an aggregator collecting pcap files that will be used to detect covert communication.</li>
-                                                         <li>Change the netmask so that all the nodes belong to the same subnet. Run: "<span style='font-family:Code;'>sudo ifconfig eth1 &lt;MonitorIP&gt; netmask 255.255.0.0</span>"     </li>
+																									 			 <li>The Monitor is the collector of all traffic. By using SDN to duplicate all the traffic that goes through the switch, the monitor is an aggregator collecting pcap files that will be used to detect covert communication.</li>
+                                                         <li>Change the netmask so that all the nodes belong to the same subnet. Run: <code>sudo ifconfig eth1 &lt;MonitorIP&gt; netmask 255.255.0.0</code></li>
                                                  </ol>
                                          </div>
-					
-					<div class='title_bg'><h3>Part 3: Capturing Regular Traffic</h3></div>
+
+					<br><div class='title_bg'><h3>Part 3: Capturing Regular Traffic</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 						<li>Now with all our nodes set up, we are going to generate and capture regular traffic being sent from the User1 to the User2 node. To capture the traffic we are going to use the flexibility of our SDN enabled switch and duplicate all traffic going through the switch to the Monitor node.</li>
-						<li>SSH into the controller and execute the following commands: 
-							<ul>
-								<li><code>cd ~/pox</code></li>
-								<li><code>./pox.py --verbose DuplicateTraffic --duplicate_port=<span style='color:red'>&lt;Interface to Monitor on OVS&gt;</span></code></li>
-							</ul>
-							<img src="img/screenshots/csc_pox.png">
+						<li>SSH into the controller and execute the following commands:
+							<pre>
+								<code>cd ~/pox
+./pox.py --verbose DuplicateTraffic --duplicate_port=<span style='color:red'>&lt;Interface to Monitor on OVS&gt;</span></code></pre>
+
+							<center><img class="u-max-full-width" src="img/screenshots/csc_pox.png"></center>
 						</li>
 						<li>The following commands tell the OVS switch to duplicate all the traffic to our monitor node.</li>
 						<li>Now before we start sending regular traffic we want to capture all the traffic being duplicated to the monitor node into a pcap file for further analysis. Execute the following command in the monitor node <code>sudo tcpdump -i eth1 -w regularTraffic.pcap</code>.</li>
@@ -193,12 +186,12 @@
 						<li>After hping3 is finished executing, press ctrl+c on the monitor node to stop the capture. Now using sftp or WinSPC download regularTraffic.pcap from the monitor node.</li>
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 4: Createing a Distribution of Regular Traffic</h3></div> 
+
+					<br><div class='title_bg'><h3>Part 4: Creating a Distribution of Regular Traffic</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>Now with the captured regular TCP traffic on your local machine, you will write a script that will create a distribution of regular tcp traffic</li>
-							<li>The spets for creating a distribution could be as follows:
+							<li>The steps for creating a distribution could be as follows:
 								<ul>
 									<li>Grab the tcp flag of every packet that has tcp header info</li>
 									<li>Calculate the total number of times that each possible flag occurs</li>
@@ -210,7 +203,7 @@
 						</ol>
 					</div>
 
-					<div class='title_bg'><h3>Part 5: Capturing Mixed Traffic</h3></div> 
+					<br><div class='title_bg'><h3>Part 5: Capturing Mixed Traffic</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>We are going to use the previously created distribution to detect covert traffic in a network, but first we need to create and capture such traffic.</li>
@@ -223,23 +216,23 @@
 						</ol>
 					</div>
 
-					<div class='title_bg'><h3>Understanding Covert Traffic</h3></div> 
+					<br><div class='title_bg'><h3>Understanding Covert Traffic</h3><hr></div>
 					<div class='subcontent'>
 						<ul class='instructions'>
 							<li>CSC can be used for many purposes like issuing commands to a botnet or for data exfiltration like in our example. To understand how CSC can be used in data exfiltration, it is important to understand TCP flags. Within a packet, there is a specific six bit location that represents the 6 TCP flags. In order for TCP flags to be present in a packet, this six bit location would have certain bits or all of these six bits set or equal to 1 and not 0.</li>
-							<li>For example, the below diagram shows that the bit location for the TCP ACK flag and TCP SYN flag are set (equal to 1) while the TCP URG flag, TCP PSH flag, TCP RST flag and TCP FIN flag are not set (equal to 0).<br> <img src="img/screenshots/csc_tcp_header.png"></li>
+							<li>For example, the below diagram shows that the bit location for the TCP ACK flag and TCP SYN flag are set (equal to 1) while the TCP URG flag, TCP PSH flag, TCP RST flag and TCP FIN flag are not set (equal to 0).<br><center> <img class="u-max-full-width" src="img/screenshots/csc_tcp_header.png"><br></center></li>
 							<li>In our example, the data we are exfiltrating are 140 character long passwords. A character is 8 bits. Thus, one password of 140 characters is exactly 1120 bits long. This means it would take about 187 packets to mask the 1120 bits of a single password inside the TCP flag bit fields of a packet.</li>
-							<li>For example, say we have a two letter password that equals the bit representation of 0101000011110101. We would need to send three packets in order to exfiltrate this password.<br><img src="img/screenshots/csc_tcp_headers_message.png"></li>
-							
+							<li>For example, say we have a two letter password that equals the bit representation of 0101000011110101. We would need to send three packets in order to exfiltrate this password.<br><center><img class="u-max-full-width" src="img/screenshots/csc_tcp_headers_message.png"></center><br></li>
+
 						</ul>
 					</div>
 
-					<div class='title_bg'><h3>Part 6: Detecting Covert Traffic</h3></div> 
+					<br><div class='title_bg'><h3>Part 6: Detecting Covert Traffic</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>Now we will write a script to detect if there is covert traffic in a pcap file. To do this we are going to expand on the script we wrote earlier. We will be using a distribution of regular traffic and find the relative entropy compared to different packet intervals of the mixed traffic. If the relative entropy is greater than a certain threshold then we can say with confidence that there is covert traffic.</li>
-							<li>Relative entropy or Kullback–Leibler divergence is the measure of information lost from one probability distribution to another. A great excerpt that clearly explains what KL divergence can be found here: <a href="http://web.engr.illinois.edu/~hanj/cs412/bk3/KL-divergence.pdf">http://web.engr.illinois.edu/~hanj/cs412/bk3/KL-divergence.pdf</a></li>
-							<li>The steps for a script that uses a sliding packet window are as follows: 
+							<li>Relative entropy or Kullback&#8208;Leibler divergence is the measure of information lost from one probability distribution to another. A great excerpt that clearly explains what KL divergence can be found here: <a href="http://web.engr.illinois.edu/~hanj/cs412/bk3/KL-divergence.pdf">http://web.engr.illinois.edu/~hanj/cs412/bk3/KL-divergence.pdf</a></li>
+							<li>The steps for a script that uses a sliding packet window are as follows:
 								<ul>
 									<li>Get a distribution of regular traffic using your previous script</li>
 									<li>Populate the packet window with desired amount of packets</li>
@@ -249,12 +242,13 @@
 									<li>If not, slide the packet window over a packet and repeat the process of calulating the relative entropy until covert traffic is detected or the packet window can't slide over anymore</li>
 								</ul>
 							</li>
-							
-						</ol> 
+
+						</ol>
 					</div>
 
 				</div>
 			</div>
+		</div>
 		</main>
 	</body>
 </html>

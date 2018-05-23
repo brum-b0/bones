@@ -1,21 +1,15 @@
 <html>
 	<head>
 		<title>Correlation and Mitigation using SDN Lab</title>
-		<link rel='stylesheet' style='text/css' href='css/page_style.css' media='screen'/>
-		<link rel='stylesheet' style='text/css' href='css/page_style2.css' media='print'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='screen'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
 		<script src='js/jquery.js'></script>
 		<script src='js/main.js'></script>
 	</head>
 	<body>
-		
-		<div id='hide_page' onclick='close_popup()'></div>
-		<div id='pop_up'>
-			<div id='close' onclick='close_popup()' style='padding-left:20px;padding-top:10px;'>X</div>
-			
-				<img src='' id='pop_upimg' style='display:none;padding:20px 20px 20px 20px;'>
-			
-		</div>
-		
+
+
+		<div class="container">
 		<center>
 			<div id='header'>
 				<div id='header_info'>
@@ -24,9 +18,9 @@
 			</div>
 			<div id='site_body'>
 				<div id='actual_content'>
-					<div id ='main_title'><h2>Correlation and Mitigation using SDN Lab</h2></div></br>
-					
-					<div class='title_bg'><h3>Lab Goals</h3></div>
+					<div id ='main_title'><h5>- Correlation and Mitigation using SDN Lab -</h5></div><br>
+				</center>
+					<br><div class='title_bg'><h3>Lab Goals</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li>To get you acquainted with Software Defined Networking (SDN) concepts</li>
@@ -36,12 +30,12 @@
 					</div>
 
 
-					<div class='title_bg'><h3>Quick introduction to Software Defined Networks (SDN)</h3></div>
+					<br><div class='title_bg'><h3>Quick introduction to Software Defined Networks (SDN)</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 						This lab is using a powerful network architecture, Software Defined Networking (SDN). SDN is a flexible, agile, and fully programmable network paradigm. Openflow is the framework that offers this standardization and programmability for the software swiches that are used in SDN architectures.
 						In the SDN architecture the network and controle plane are separated, offering a logically centralized controller that can be easily programmable
-						and as you can see in the lab that follows can instruct the Openflow Virtual Switch to change configurations in real time. 
+						and as you can see in the lab that follows can instruct the Openflow Virtual Switch to change configurations in real time.
 						In our case the controller instructs the switch to drop the malicious flow of the Denial of Service attack. Furthermore, the controller can offer
 						useful information about the network, i.e., information about the flows that are going through the switch that includes source and destination IP addresses, source and destination MAC addresses, ports, and other useful statistics. The following videos give a good introduction on SDN and Openflow:
 						<ul>
@@ -55,7 +49,7 @@
 
 						</ol>
 					</div>
-                                        <div class='title_bg'><h3>Preliminary steps, RSpec, and Python code you will need for this lab</h3></div>
+                                        <br><div class='title_bg'><h3>Preliminary steps, RSpec, and Python code you will need for this lab</h3><hr></div>
                                         <div class='subcontent'>
                                             <ul class='instruction'>
                                                 <li>Complete the <a href='http://mountrouidoux.people.cofc.edu/CyberPaths/intrusiondetectionsystem_v2.html' target='_blank'>Intrusion Detection Lab</a></li>
@@ -65,23 +59,23 @@
                                                 <li><a href='http://mountrouidoux.people.cofc.edu/CyberPaths/files/mitigate.py' target='_blank'>mitigate.py</a></li>
                                             </ul>
                                         </div>
-					
-					<div class='title_bg'><h3>Part 1: analyze.py - Installing, Understanding and Running</h3></div>
+
+					<br><div class='title_bg'><h3>Part 1: analyze.py - Installing, Understanding and Running</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li><b>Installing analyze.py</b></br></br>
 								<ul>
 									<li>Connect to the "Monitor" node through SSH</li>
-									<li>Execute the following command:</br></br>
-										<ul>
-											<li><span style='font-family:Code;'>cd /opt/</span></li>
-										</ul>
+									<li>Execute the following command:
+
+											<code>cd /opt/</code></li>
+
 									</li>
-									<li>Now you will open the file analyze.py that was provided to you using a text editor (such as Notepad, Notepad++, etc...), then go ahead and edit the line that contains "<b>HOST = '<b style='color:red;'>172.17.2.2</b>'</b>" (line 71, to be exact) and set the constant HOST to the IP of your Controller (The one you figured out on the set-up portion of the Lab).</br></br>Then, you will create the file analyze.py by executing the following command:</br></br>
+									<li>Now you will open the file analyze.py that was provided to you using a text editor (such as Notepad, Notepad++, etc...), then go ahead and edit the line that contains "<b>HOST = '<b style='color:red;'>172.17.2.2</b>'</b>" (line 71, to be exact) and set the constant HOST to the IP of your Controller (The one you figured out on the set-up portion of the Lab).<br><br>Then, you will create the file analyze.py by executing the following command:
 										<ul>
-											<li><span style='font-family:Code;'>sudo nano analyze.py</span></li>
-											<li>Your terminal should look like this:</br><img src='img/screenshots/Screenshot_33.png'></li>
-											<li>Now copy everything from the analyze.py you have in the text editor (where you modified the constant HOST), and paste it in your terminal (To paste in the terminal simply use Right Click). Your terminal should now look like this:</br><img src='img/screenshots/Screenshot_34.png'></li>
+											<li><code>sudo nano analyze.py</code></li>
+											<li>Your terminal should look like this:</br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_33.png'></center></li>
+											<li>Now copy everything from the analyze.py you have in the text editor (where you modified the constant HOST), and paste it in your terminal (To paste in the terminal simply use Right Click). Your terminal should now look like this:</br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_34.png'></center></li>
 											<li>Now press Ctrl + X</li>
 											<li>Press Y</li>
 											<li>Press Enter</li>
@@ -97,23 +91,24 @@
 								</ul>
 							</li>
 							<li><b>Running analyze.py - Execute the following commands:</b></br></br>
-								<ul>
-									<li><span style='font-family:Code;'>cd /opt/</span></li>
-									<li><span style='font-family:Code;'>sudo python analyze.py</span></li>
-									<li>That is how you make analyze.py run!</li>
-								</ul>
+
+									<pre><code>cd /opt/
+sudo python analyze.py</code></pre>
+That is how you make analyze.py run!
+
 							</li>
 						<ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 2: correlate.py - Installing, Understanding and Running</h3></div>
+
+					<br><div class='title_bg'><h3>Part 2: correlate.py - Installing, Understanding and Running</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li><b>Installing</b></br></br>
 								<ul>
 									<li>Connect to the Controller node through SSH</li>
-									<li>Execute the following commands:</br></br><ul><li><span style='font-family:Code;'>cd /opt/</span></li><li><span style='font-family:Code;'>sudo nano correlate.py</span></li></ul></li>
-									<li>Now open on a text editor, like you did for part one, the correlate.py file that was provided to you. Edit the line that contains</br>"<b>ovsAddress = '<b style='color:red;'>172.17.2.16</b>'</b>" and set the variable to the IP of the OVS (You can figure this out by running "ifconfig" on the OVS, and the IP that shows on eth0 will be the IP of the OVS)</br><img src='img/screenshots/Screenshot_36.png'></li>
+									<li>Execute the following commands:</br></br></li>
+										<pre><code>cd /opt/</br>sudo nano correlate.py</code></pre>
+									<li>Now open on a text editor, like you did for part one, the correlate.py file that was provided to you. Edit the line that contains<code><b>ovsAddress = '<b style='color:red;'>172.17.2.16</b>'</b></code> and set the variable to the IP of the OVS (You can figure this out by running "ifconfig" on the OVS, and the IP that shows on eth0 will be the IP of the OVS)</br><center><img class="u-max-full-width" src='img/screenshots/Screenshot_36.png'></center></li>
 									<li>Copy everything from the text editor, and paste it on the terminal (Like you did for part one)</li>
 									<li>Now press Ctrl + X</li>
 									<li>Press Y</li>
@@ -130,29 +125,29 @@
 								</ul>
 							</li>
 							<li><b>Running - Execute the following commands:</b></br></br>
-								<ul>
-									<li><span style='font-family:Code;'>cd /opt/</span></li>
-									<li><span style='font-family:Code;'>sudo python correlate.py</span></li>
-									<li>That is how you make correlate.py run!</li>
-								</ul>
+
+									<pre><code>cd /opt/
+sudo python correlate.py</code></pre>
+									That is how you make correlate.py run!
+
 							</li>
 						</ol>
 						</br>
 					</div>
-					
-					<div class='title_bg'><h3>Part 3: mitigator.py - Installing, Understanding and Running</h3></div>
+
+					<br><div class='title_bg'><h3>Part 3: mitigator.py - Installing, Understanding and Running</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							<li><b>Installing</b></br></br>
 								<ul>
 									<li>Open another SSH connection to the Controller</li>
-									<li>Execute the following commands:</br></br>
-										<ul>
-											<li><span style='font-family:Code;'>cd /opt/</span></li>
-											<li><span style='font-family:Code;'>sudo nano mitigate.py</span></li>
-										</ul>
+									<li>Execute the following commands:</br>
+										<pre>
+											<code>cd /opt/
+sudo nano mitigate.py</code></pre>
+
 									</li>
-									<li>Open in a text editor the mitigator.py file you were provided, and edit the line that contains "<b>ovsAddress = '<b style='color:red;'>172.17.2.16</b>'</b>" (Line 10). Set the variable to the IP of your OVS (The one you found in the previous part of the lab)</li>
+									<li>Open in a text editor the mitigator.py file you were provided, and edit the line that contains <code><b>ovsAddress = '<b style='color:red;'>172.17.2.16</b>'</b></code> (Line 10). Set the variable to the IP of your OVS (The one you found in the previous part of the lab)</li>
 									<li>Copy everything from the mitigator.py file that you edited on the text editor</li>
 									<li>Then, paste it on the terminal by making a Right Click</li>
 									<li>Use Ctrl + X</li>
@@ -167,45 +162,43 @@
 							</li>
 							<li><b>Running mitigator.py</b></br></br>
 								<ul>
-									<li>You do <b style='color:red;'>not</b> need to run any commands for mitigator.py, given that it is executed automatically by correlate.py through the next line of code</li>
-									<li><span style='font-family:Code;'>os.popen('sudo python mitigate.py ' + str(targetPort) + ' ' + str(targetIP), shell=True)</span></li>
+									<li>You do <b style='color:red;'>not</b> need to run any commands for mitigator.py, given that it is executed automatically by correlate.py through the next line of code
+									<pre><code>os.popen('sudo python mitigate.py ' + str(targetPort) + ' ' + str(targetIP), shell=True)</code></pre></li>
 								</ul>
 							</li>
 						</ol>
 					</div>
-					
-					<div class='title_bg'><h3>Part 4: Experimenting - Running an Internal Attack</h3></div>
+
+					<br><div class='title_bg'><h3>Part 4: Experimenting - Running an Internal Attack</h3><hr></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
 							An internal attack means that the attack is coming from machines connected directly to the network switch. We will be running such an attack in order to see how correlation and mitigation takes place on an internal attack.</br></br>
 							In order to see correlation and mitigation in action, we must first start duplicating traffic from our controller on our topology to our monitor. This allows our monitor to view the traffic of the network.</br></br>
 							<li>To duplicate the traffic you need to first, figure out the corresponding interface (like eth1, eth2 ...) of the <b>Monitor</b> in the <b style='color:red;'>OVS</b> (You can use the GENI topology visualizer and "ifconfig" for this) and then execute the following commands on the <b>Controller</b> to start the duplication:</br></br>
-								<ul>
-									<li><span style='font-family:Code;'>cd pox</span></li>
-									<li><span style='font-family:Code;'>./pox.py --verbose DuplicateTraffic --duplicate_port=<b style='color:red;'>&lt;interface on the OVS that corresponds to the monitor&gt;</b></span></li>
-								</ul>
+
+									<pre><code>cd pox
+./pox.py --verbose DuplicateTraffic --duplicate_port=<b style='color:red;'>&lt;interface on the OVS that corresponds to the monitor&gt;</b></code></pre>
+
 							</li>
 							<li>
 								Now to start Snort you need to first figure out the interface of the OVS in the Monitor, you can figure this out by running "ifconfig" on the Monitor and comparing the IPs with the node between the Monitor and OVS, once you have figured out this, execute the following command on the Monitor's terminal:</br></br>
 								<ul>
-									<li><span style='font-family:Code;'>sudo snort -c /etc/snort/snort.conf -A fast -i <b style='color:red;'>&lt;interface on the Monitor that corresponds to the OVS&gt;</b></span></li>
+									<pre><code>sudo snort -c /etc/snort/snort.conf -A fast -i <b style='color:red;'>&lt;interface on the Monitor that corresponds to the OVS&gt;</b></code></pre>
 								</ul>
 							</li>
 							<li>Now, we need to simulate normal traffic on our network to have something to which we can compare the DDoS attack. To simulate traffic on the network we will use <a href='https://www.iperf.fr'>iPerf</a>. iPerf requieres a Sever and a Client to generate traffic, so we will use the Victim as the Server and the User as the Client to simulate traffic.
-							To start the server on the <b style='color:red;'>Victim</b> execute the following command:</br></br>
-							<ul>
-								<li><span style='font-family:Code;'>iperf -s</span></li>
-							</ul>
+							To start the server on the <b style='color:red;'>Victim</b> execute the following command:<pre><code>iperf -s</code></pre>
+
 							Now go ahead and start the scripts that you installed in Part 2, so whenever snort detects a DDoS attack these mitigate such. Start the scripts in the following order: correlate.py (On the controller) and then analyze.py (On the monitor). For instructions on how to start these scripts, refer to the Part 2 on the respective "Running" portion.</br></br>
-							
+
 							To start the traffic simulation, now we need to make the iperf client start communicating with the Server. We will start a communication that will last two minutes (120 seconds) with the following command on the <b style='color:red;'>User</b>:</br></br>
 							<ul>
-								<li><span style='font-family:Code;'>iperf -c victim -t 120</span></li>
+								<pre><code>iperf -c victim -t 120</code></pre>
 							</ul></li>
 							<li>
 								Finally time to run the attack! To run the attack go to the terminal of the Attacker and execute the following command:</br></br>
 								<ul>
-									<li><span style='font-family:Code;'>sudo timeout -sHUP 20s hping3 -i ul -S --flood --rand-source -p 80 victim</span></li>
+									<pre><code>sudo timeout -sHUP 20s hping3 -i ul -S --flood --rand-source -p 80 victim</code></pre>
 								</ul>
 							</li>
 							<li><b>Trust but verify!</b></br></br>
@@ -217,16 +210,16 @@
 							</li>
 						</ol>
 					</div>
-					
+
 					<!--div class='title_bg'><h3>Survey</h3></div>
 					<div class='subcontent'>
 						<ol class='instructions'>
-							
+
 						</ol>
 					</div-->
-					
+
 				</div>
 			</div>
-		</center>
+		</div>
 	</body>
 </html>
