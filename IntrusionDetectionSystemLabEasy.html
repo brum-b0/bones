@@ -64,7 +64,7 @@
 							<li>Create a new slice under the corresponding project.</li>
 							<li>Click the "Add Resources" button located on the page of your newly created slice.</li>
 							<li>Click the URL option.<br><center><img class="u-max-full-width" src="img/screenshots/Screenshot_1.png"></center></li>
-							<li>Paste the following link into the input box: <b style="color:red;">http://mountrouidoux.people.cofc.edu/CyberPaths/files/IDSLabEasyRSpec.txt <!-- CHANGE THE LINK FOR THE RSPEC HERE --></b>. Alternatively you may access our  <a href='https://github.com/mundruid/CyberPaths/blob/master/IDSLabEasyRSpec.txt' target=_blank> github repository</a> with RSpecs and other scripts.</li>
+							<li>Paste the following link into the input box: <b style="color:red;">http://mountrouidoux.people.cofc.edu/CyberPaths/files/IDSLabEasyRSpec.txt <!-- CHANGE THE LINK FOR THE RSPEC HERE --></b>. Alternatively you may access our  <a href='https://github.com/mundruid/CyberPaths/tree/master/RSpecs' target=_blank> github repository</a> with RSpecs and other scripts.</li>
 							<li>Then, click on the "Select" button.<br><center><img class="u-max-full-width" src="img/screenshots/Screenshot_25.png"></center></li>
 							<li>Your topology should now be loaded and look similar to the picture below.<br><center><img class="u-max-full-width" src="img/screenshots/Screenshot_97.png"></center></li>
 							<li>Now, click on "Site 1", select one of the available aggregates from the dropdown menu on the left, and reserve the resources.<br><center><img class="u-max-full-width" src="img/screenshots/Screenshot_27.png"></center></li>
@@ -114,7 +114,7 @@
 							<li>Now, go back to the OVS node. There, execute the following command. Here, ethC represents the interface that matches with the Monitor's IP, and ethX, ethY, and ethZ are the three remaining interfaces besides eth0 and lo:
 
 									<pre><code>sudo ovs-vsctl -- set Bridge br0 mirrors=@m -- --id=@ethX get Port ethX -- --id=@ethY get Port ethY&nbsp;
--- --id=@ethZ get Port ethZ -- --id=ethC get Port ethC -- --id=@m create Mirror name=mymirror&nbsp;
+-- --id=@ethZ get Port ethZ -- --id=@ethC get Port ethC -- --id=@m create Mirror name=mymirror&nbsp;
 select-dst-port=@ethX,@ethY,@ethZ select-src-port=@ethX,@ethY,@ethZ output-port=@ethC</code></pre></li>
 									<li>This command creates a mirror port for the switch, i.e., all the traffic that goes through the switch is copied to this port and as a consequence it is sent to the monitor. Thus, if the user is sending traffic to the victim, this traffic will be seen both by the victim and the monitor.</li>
 

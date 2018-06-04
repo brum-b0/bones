@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>Steganography</title>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css'/>
+		<link rel='stylesheet' style='text/css' href='css/skeleton.css' media='print'/>
+		<script src='js/jquery.js'></script>
+		<script src='js/main.js'></script>
+	</head>
+	<body>
+
+
+		<div class="container">
+			<div id='header'>
+				<div id='header_info'>
+					<center><h1>Cyberpaths</h1></center>
+				</div>
+			</div>
+			<div id='site_body'>
+				<div id='actual_content'>
+					<center><h5>- Introduction to Steganography -</h5></center><br><br>
+
+					<div class='title_bg'><h3>Scenario</h3></div><hr>
+					<div class='subcontent'>
+						<ul class='instructions'>
+              <li> There is a spy in your midst! You have discovered that one of your colleagues is a spy but you do not know who it is... All you know is that they communicate with their handle through pictures that have a hidden message. In order to conceal their secret communication they have hidden a message in a picture. However, they are smart and cunning spies, thus they have multiple pictures that look the same, but only one picture has the message.</li>
+						</ul>
+					</div>
+
+					<br><div class='title_bg'><h3>Mission</h3></div><hr>
+					<div class='subcontent'>
+            <ul>
+              <li>Your mission is to scan all the files and find the picture that the handler is sending to the spy that is in our midst!</li>
+            </ul>
+            <ol>
+              <li>Begin by extracting the files from the provided archive which can also be found <a href="https://github.com/s-nat-e0/forensics/raw/master/movies.zip" target="_blank">here</a>.</li>
+              <li><b>You can use the following linux commands</b>
+                <ul>
+                  <li><code>strings &lt;filename&gt;</code>, where you can substitute one of the picture file names that were in the archive.</li>
+                  <li>Read the man page to figure out what the strings command does.</li>
+                  <li>You are looking for a string that is unusually long.</li>
+                  <li>Once you find that string you are done with the first hint of your forensics analysis.</li>
+
+                </ul>
+              </li>
+              <li><b>The found string is a hash string.</b>
+                <ul>
+                  <li>What is a hash? A hash is an irreversible mathematical function that is commonly
+used to "scramble", i.e., encrypt, passwords and store them securely. It is also
+used to check the integrity of data. If a file has been tampered, its hash string will
+be different than the original.</li>
+                  <li>What is a hash string? A hash string is a result of a hash, it is really a set of
+characters that correspond to the specific file or password and only that file or
+password, none else!</li>
+                  <li>You can generate hash strings using the linux command: <code>sha1sum &lt;filename&gt;</code>,
+where you can substitute one of the picture file names that were in the archive.</li>
+                  <li>Every file has a different hash string because it has been tampered with, even
+though all files look that the same picture!</li>
+                  <li>Only one hash corresponds to the file that has the secret that we are looking for.</li>
+
+                </ul>
+              </li>
+              <li><b>Download the picture in your desktop and open it with your favorite image processing tool</b>
+                <ul>
+                  <li>The secret message is hidden somewhere in the picture</li>
+                  <li>Only the very observative people with strong eyes can find it</li>
+                </ul>
+              </li>
+
+            </ol>
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
